@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>The Christian Calendar — Every Sabbath Counted Since AD 33</title>
+<meta name="description" content="A calendar numbering every Sabbath in unbroken sequence since the Passover Sabbath of Saturday, 4 April AD 33.">
+<link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+<!-- ================= HEADER : night sky ================= -->
+<header class="site-header">
+  <div class="stars" aria-hidden="true"></div>
+  <div class="header-inner">
+    <p class="eyebrow">An unbroken chain of Saturdays</p>
+    <h1>The Christian Calendar</h1>
+    <p class="tagline">Every Sabbath counted since the Passover Sabbath of the Resurrection week<br>Saturday, 4&nbsp;April AD&nbsp;33</p>
+    <p class="anchor-seal">Sabbath&nbsp;<span class="seal-num">#1</span>&nbsp;= Passover Sabbath&ensp;&middot;&ensp;Julian Day Number 1,733,205</p>
+  </div>
+  <div class="chain" aria-hidden="true">
+    <span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span>
+  </div>
+</header>
+
+<!-- ================= TWO-SECTION BODY ================= -->
+<div class="page-body">
+
+  <!-- ---------- LEFT : the calendar ---------- -->
+  <main class="cal-section" aria-label="Christian Calendar">
+
+    <div id="countdown" class="countdown" role="status"></div>
+
+    <nav class="controls" aria-label="Calendar navigation">
+      <button id="prevBtn" class="btn" aria-label="Previous month">&#8592;&ensp;Prev</button>
+      <button id="todayBtn" class="btn btn-quiet">Today</button>
+      <button id="nextBtn" class="btn" aria-label="Next month">Next&ensp;&#8594;</button>
+      <span class="control-gap" aria-hidden="true"></span>
+      <select id="monthSel" class="btn" aria-label="Select month"></select>
+      <input type="number" id="yearInp" class="btn year-inp" min="33" max="3000" aria-label="Select year, 33 to 3000">
+      <button id="goBtn" class="btn btn-gold">Go</button>
+    </nav>
+
+    <p id="monthSummary" class="month-summary" aria-live="polite"></p>
+
+    <table id="calTable" class="calendar">
+      <caption id="calCaption"></caption>
+      <thead><tr id="calHead"></tr></thead>
+      <tbody id="calBody"></tbody>
+    </table>
+
+    <ul class="legend" aria-label="Legend">
+      <li><span class="swatch swatch-gold"></span>Sabbath number</li>
+      <li><span class="star-key">&#10022;</span>Anniversary Sabbath <em>(first on/after 4&nbsp;April each year)</em></li>
+      <li><span class="swatch swatch-wine"></span>Milestone <em>(every 1,000th)</em></li>
+    </ul>
+  </main>
+
+  <!-- ---------- RIGHT : video teachings ---------- -->
+  <aside class="video-section" aria-label="Video teachings">
+    <h2>Video Teachings</h2>
+    <p class="video-sub">Lessons on the Christian Calendar &mdash; coming soon</p>
+
+    <article class="video-card">
+      <div class="video-thumb" role="img" aria-label="Video placeholder"><span class="play">&#9654;</span></div>
+      <h3>What is the Christian Calendar?</h3>
+      <p class="video-meta">Episode 1 &middot; coming soon</p>
+    </article>
+
+    <article class="video-card">
+      <div class="video-thumb" role="img" aria-label="Video placeholder"><span class="play">&#9654;</span></div>
+      <h3>Dating the Passover Sabbath of AD&nbsp;33</h3>
+      <p class="video-meta">Episode 2 &middot; coming soon</p>
+    </article>
+
+    <article class="video-card">
+      <div class="video-thumb" role="img" aria-label="Video placeholder"><span class="play">&#9654;</span></div>
+      <h3>An Unbroken Chain of 103,000+ Sabbaths</h3>
+      <p class="video-meta">Episode 3 &middot; coming soon</p>
+    </article>
+
+    <p class="video-note">To publish a video, replace a card's <code>.video-thumb</code> with a YouTube <code>&lt;iframe&gt;</code> embed &mdash; the 16:9 frame keeps its place.</p>
+  </aside>
+</div>
+
+<!-- ================= FOOTER : night sky ================= -->
+<footer class="site-footer">
+  <div class="chain chain-top" aria-hidden="true">
+    <span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span>
+  </div>
+  <div class="footer-inner">
+    <p class="verse">&ldquo;There remaineth therefore a rest to the people of God.&rdquo;<span class="verse-ref">&mdash; Hebrews&nbsp;4:9</span></p>
+    <p class="method">Method: continuous Julian Day Number counting &mdash; immune to the 1582 Julian&rarr;Gregorian reform, through which the seven-day week ran unbroken. Dating after Humphreys &amp; Waddington, <em>Nature</em>&nbsp;306 (1983), and NASA eclipse records. Dates before 15&nbsp;Oct&nbsp;1582 are shown in the proleptic Gregorian calendar.</p>
+    <p id="selfCheck" class="selfcheck"></p>
+  </div>
+</footer>
+
+<script src="js/calendar.js"></script>
+</body>
+</html>
