@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Sabbath Calendar v2 — invariant self-test</title>
+<style>
+  body { font: 15px/1.5 system-ui, sans-serif; margin: 2rem; max-width: 60rem; }
+  .pass { color: #2d6a2d; } .fail { color: #8b1a1a; }
+  code { font-family: ui-monospace, Menlo, monospace; }
+  table { border-collapse: collapse; } td, th { border: 1px solid #ccc; padding: 4px 8px; text-align: left; }
+</style>
+</head>
+<body>
+<h1>Chronology Core — invariant self-test</h1>
+<p>Runs <code>verifyInvariants({seed: 1, samples: 1000})</code> in this browser. The <code>digest</code>
+must equal the Node value asserted in <code>test/invariants.test.js</code> (T-VER-01).</p>
+<p id="status">Running…</p>
+<p>Digest: <code id="digest"></code></p>
+<table id="checks"><thead><tr><th>ID</th><th>Statement</th><th>Cases</th><th>Result</th></tr></thead><tbody></tbody></table>
+<script type="module">
+  import { verifyInvariants } from '../../src/core/index.js';
+  const t0 = performance.now();
+  const r = verifyInvariants({ seed: 1, samples: 1000 });
+  const ms = (performance.now() - t0).toFixed(1);
+  const status = document.getElementById('status');
+  status.textContent = (r.allPassed ? 'ALL PASSED' : 'FAILED') + ` in ${ms} ms — ${navigator.userAgent}`;
+  status.className = r.allPassed ? 'pass' : 'fail';
+  document.getElementById('digest').textContent = r.digest;
+  const tb = document.querySelector('#checks tbody');
+  for (const c of r.checks) {
+    const tr = document.createElement('tr');
+    tr.innerHTML = `<td>${c.id}</td><td>${c.statement}</td><td>${c.cases}</td><td class="${c.passed ? 'pass' : 'fail'}">${c.passed ? 'pass' : 'FAIL ' + c.failures.join('; ')}</td>`;
+    tb.appendChild(tr);
+  }
+  window.__invariantReport = r;
+</script>
+</body>
+</html>

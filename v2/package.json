@@ -1,0 +1,18 @@
+{
+  "name": "sabbath-calendar-v2",
+  "version": "0.1.0-phase1",
+  "description": "Second-generation Sabbath Calendar: exact, unbounded seven-day chronology anchored at JDN 1,733,205 (Sabbath #1), with synchronized calendar representations.",
+  "type": "module",
+  "private": true,
+  "license": "SEE LICENSE IN ../README.md",
+  "engines": { "node": ">=20" },
+  "scripts": {
+    "test": "node --test \"test/**/*.test.js\"",
+    "check:core": "node scripts/check-core.mjs",
+    "check:baseline": "git diff --quiet 6229702369afed375cfdbfaa5e6112052d94f57c -- ../index.html ../css ../js ../README.md && echo baseline-unchanged",
+    "verify": "npm run check:core && npm run check:baseline && npm test"
+  },
+  "devDependencies": {
+    "fast-check": "^3.23.1"
+  }
+}

@@ -32,7 +32,7 @@ Saturday, ending on Sabbath *n*. The Sabbath is the seventh day of its own cycle
 **D5 (Day of week).** `DoW(J) = floorMod(J, 7)` with 0 = Mon, 1 = Tue, 2 = Wed, 3 = Thu,
 4 = Fri, 5 = Sat, 6 = Sun. **[CONVENTION]** inherited from the baseline.
 
-**D6 (Position within cycle).** `Pos(J) = floorMod(J − A, 7) + 1 ∈ {1,…,7}`, where 7 is the Sabbath.
+**D6 (Position within cycle).** `Pos(J) = floorMod(J − A + 6, 7) + 1 ∈ {1,…,7}`, where 7 is the Sabbath (`Pos(A) = floorMod(6, 7) + 1 = 7`).
 Equivalently `Pos(J) = (DoW(J) + 2) mod 7`, with 0 mapped to 7: Sunday = 1, …, Saturday = 7.
 
 **D7 (Adjacent Sabbaths).**
