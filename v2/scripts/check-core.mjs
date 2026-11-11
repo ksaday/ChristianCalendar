@@ -9,22 +9,30 @@ import { readFileSync, readdirSync } from 'node:fs';
 import { join, dirname } from 'node:path';
 import { fileURLToPath } from 'node:url';
 
-const root = join(dirname(fileURLToPath(import.meta.url)), '..', 'src', 'core');
-const files = readdirSync(root).filter(f => f.endsWith('.js'));
+const srcRoot = join(dirname(fileURLToPath(import.meta.url)), '..', 'src');
+const layers = {
+  core:      { allowed: [/^\.\/[a-z-]+\.js$/] },
+  calendars: { allowed: [/^\.\/[a-z-]+\.js$/, /^\.\.\/core\/[a-z-]+\.js$/] },
+};
 const problems = [];
 const stripComments = (s) => s.replace(/\/\*[\s\S]*?\*\//g, '').replace(/\/\/.*$/gm, '');
+const files = [];
+for (const [layer, rule] of Object.entries(layers)) {
+  const dir = join(srcRoot, layer);
+  for (const name of readdirSync(dir).filter(f => f.endsWith('.js'))) files.push({ f: `${layer}/${name}`, path: join(dir, name), rule });
+}
 
-for (const f of files) {
-  const src = stripComments(readFileSync(join(root, f), 'utf8'));
+for (const { f, path, rule } of files) {
+  const src = stripComments(readFileSync(path, 'utf8'));
   for (const m of src.matchAll(/import\s+[^'"]*['"]([^'"]+)['"]/g)) {
-    if (!/^\.\/[a-z-]+\.js$/.test(m[1])) problems.push(`${f}: non-sibling import ${m[1]}`);
+    if (!rule.allowed.some(re => re.test(m[1]))) problems.push(`${f}: import outside its layer: ${m[1]}`);
   }
   for (const id of ['Date', 'Intl', 'window', 'document', 'fetch', 'Math.random', 'localStorage', 'setTimeout', 'XMLHttpRequest', 'navigator']) {
     const re = new RegExp(`(^|[^\\w.])${id.replace('.', '\\.')}\\b`);
     if (re.test(src)) problems.push(`${f}: forbidden identifier ${id}`);
   }
   if (/creation/i.test(src)) problems.push(`${f}: contains "creation" (REQ-GEN-01)`);
-  if (f === 'chronology.js') {
+  if (f === 'core/chronology.js') {
     const allowed = new Set(['0', '1', '2', '3', '4', '5', '6', '7', '1733205']);
     for (const m of src.matchAll(/(?<![\w.])(\d[\d_]*)n?\b/g)) {
       const lit = m[1].replace(/_/g, '');
@@ -33,4 +41,4 @@ for (const f of files) {
   }
 }
 if (problems.length) { console.error('check-core: FAILED\n' + problems.map(p => '  - ' + p).join('\n')); process.exit(1); }
-console.log(`check-core: OK (${files.length} files: ${files.join(', ')})`);
+console.log(`check-core: OK (${files.length} files: ${files.map(x => x.f).join(', ')})`);

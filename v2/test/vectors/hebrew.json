@@ -1,0 +1,21 @@
+{
+  "description": "Reference Gregorian ↔ Hebrew (fixed arithmetic calendar) vectors. Hebrew month numbering: 1 = Nisan … 7 = Tishri … 12 = Adar/Adar I, 13 = Adar II. The Gregorian date is the civil day whose daytime carries the Hebrew date (the Hebrew day began at the previous sunset).",
+  "sources": [
+    "Hebcal (hebcal.com) published holiday dates for 5784–5787 (Rosh Hashana, Yom Kippur, Pesach, Chanukah)",
+    "Dershowitz & Reingold, Calendrical Calculations (epoch: 1 Tishri AM 1 = R.D. −1,373,427)",
+    "Cross-checked at test time against ICU via Intl.DateTimeFormat('en-u-ca-hebrew') when available (T-CAL-36)"
+  ],
+  "retrieved": "2026-11-11",
+  "vectors": [
+    { "gregorian": { "year": "2024", "month": 4, "day": 23 }, "hebrew": { "year": "5784", "month": 1, "day": 15 }, "note": "Pesach 5784 (leap year, 383 days)" },
+    { "gregorian": { "year": "2024", "month": 10, "day": 3 }, "hebrew": { "year": "5785", "month": 7, "day": 1 }, "note": "Rosh Hashana 5785" },
+    { "gregorian": { "year": "2024", "month": 12, "day": 26 }, "hebrew": { "year": "5785", "month": 9, "day": 25 }, "note": "Chanukah 5785, 25 Kislev" },
+    { "gregorian": { "year": "2025", "month": 4, "day": 13 }, "hebrew": { "year": "5785", "month": 1, "day": 15 }, "note": "Pesach 5785" },
+    { "gregorian": { "year": "2025", "month": 9, "day": 23 }, "hebrew": { "year": "5786", "month": 7, "day": 1 }, "note": "Rosh Hashana 5786" },
+    { "gregorian": { "year": "2025", "month": 10, "day": 2 }, "hebrew": { "year": "5786", "month": 7, "day": 10 }, "note": "Yom Kippur 5786" },
+    { "gregorian": { "year": "2026", "month": 4, "day": 2 }, "hebrew": { "year": "5786", "month": 1, "day": 15 }, "note": "Pesach 5786" },
+    { "gregorian": { "year": "2026", "month": 9, "day": 12 }, "hebrew": { "year": "5787", "month": 7, "day": 1 }, "note": "Rosh Hashana 5787" },
+    { "gregorian": { "year": "2000", "month": 1, "day": 1 }, "hebrew": { "year": "5760", "month": 10, "day": 23 }, "note": "23 Tevet 5760" },
+    { "gregorian": { "year": "33", "month": 4, "day": 2 }, "hebrew": { "year": "3793", "month": 1, "day": 15 }, "note": "Sabbath #1 (calculated, CONVENTIONAL): 15 Nisan AM 3793, consistent with Nisan 14 = Friday 3 April AD 33 (Humphreys & Waddington 1983)" }
+  ]
+}

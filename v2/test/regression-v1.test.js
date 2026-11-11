@@ -3,6 +3,8 @@ import { test } from 'node:test';
 import assert from 'node:assert/strict';
 import * as v1 from './fixtures/baseline-v1.js';
 import { ANCHOR_JDN, sabbathJdn, sabbathIndexOf, isSabbath, dayOfWeek, isNotASabbath } from '../src/core/index.js';
+import { gregorian } from '../src/calendars/gregorian.js';
+import { julian } from '../src/calendars/julian.js';
 
 test('T-REG-01 COMPAT-05: 11 Apr 2026 → JDN 2,461,142 → Sabbath #103,992 (baseline self-check)', () => {
   const j = v1.jdnFromGregorian(2026, 4, 11);
@@ -63,8 +65,30 @@ test('every Saturday in the baseline navigation range (years 33–3000) agrees w
 });
 
 // Deferred to the phases that port the corresponding presentation/adapter modules:
-test.todo('T-REG-03 COMPAT-06 Gregorian/Julian adapter labels of the anchor (Phase 2)');
+test('T-REG-03 COMPAT-06: the anchor reads 2 April AD 33 in the Gregorian row and 4 April AD 33 in the Julian row', () => {
+  const g = gregorian.fromJdn(ANCHOR_JDN), u = julian.fromJdn(ANCHOR_JDN);
+  assert.deepEqual([g.year, g.month, g.day], [33n, 4, 2]);
+  assert.deepEqual([u.year, u.month, u.day], [33n, 4, 4]);
+  assert.deepEqual(v1.gregFromJdn(v1.ANCHOR_JDN), { year: 33, month: 4, day: 2 });
+});
 test.todo('T-REG-04 COMPAT-07 anniversary rule, exhaustive 33–3000 (Phase 3, sabbath-row-rules)');
 test.todo('T-REG-05 COMPAT-08 milestone rule (Phase 3)');
 test.todo('T-REG-07 COMPAT-12 fmtInt with U+2212 (Phase 3, format)');
-test.todo('T-REG-20 COMPAT-04 v2 Gregorian adapter vs baseline, exhaustive 33–3000 (Phase 2)');
+test('T-REG-20 COMPAT-04: v2 Gregorian adapter equals the baseline functions for every day 33–3000 and 10^6 random JDNs in ±10^9', () => {
+  for (let y = 33; y <= 3000; y++) for (let m = 1; m <= 12; m++) {
+    const n = v1.daysInMonth(y, m);
+    for (let d = 1; d <= n; d++) {
+      const j = v1.jdnFromGregorian(y, m, d);
+      assert.equal(gregorian.toJdn({ year: BigInt(y), month: m, day: d }), BigInt(j));
+      const g = gregorian.fromJdn(BigInt(j));
+      assert.deepEqual([Number(g.year), g.month, g.day], [y, m, d]);
+    }
+  }
+  let x = 987654321;
+  for (let i = 0; i < 1_000_000; i++) {
+    x = (x * 1103515245 + 12345) % 2147483648;
+    const j = (x % 2_000_000_001) - 1_000_000_000;
+    const b = v1.gregFromJdn(j), g = gregorian.fromJdn(BigInt(j));
+    assert.equal(Number(g.year), b.year); assert.equal(g.month, b.month); assert.equal(g.day, b.day);
+  }
+});

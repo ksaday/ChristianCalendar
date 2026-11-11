@@ -68,7 +68,9 @@ An optional "regional reform table" may come later (doc 13, Phase 5).
 | Scriptural reference marker | 1 Tishri AM 1 (the calendar's epoch, Molad BaHaRaD) is a marker labeled **[CONVENTION]**, not a Creation claim (doc 08) |
 
 The adapter MUST NOT present a calculated Hebrew date in AD 33 as the date observed in
-Jerusalem that year. The anchor's Hebrew label (calculated) is shown as CONVENTIONAL with
+Jerusalem that year. (For the record, the calculated label of the anchor is 15 Nisan AM 3793,
+which agrees with the anchor's existing rationale of Nisan 14 = Friday 3 April AD 33; this
+agreement is a consistency check, not independent evidence.) The anchor's Hebrew label (calculated) is shown as CONVENTIONAL with
 this note. The historical question of Nisan 14/15 in AD 33 belongs to the anchor's existing
 justification (Humphreys & Waddington 1983) and is not re-opened.
 

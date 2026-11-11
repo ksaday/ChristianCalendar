@@ -1,0 +1,25 @@
+{
+  "description": "Reference JDN ↔ proleptic Gregorian / proleptic Julian vectors (astronomical years; 0 = 1 BC). dayOfWeek: 0 = Mon … 5 = Sat, 6 = Sun.",
+  "sources": [
+    "Meeus, Astronomical Algorithms, 2nd ed. 1998, ch. 7 (2000-01-01 noon = JD 2451545.0; 1858-11-17 = MJD 0 = JD 2400000.5)",
+    "Richards, Explanatory Supplement to the Astronomical Almanac, 3rd ed. 2013, ch. 15",
+    "USNO Julian Date Converter (aa.usno.navy.mil), well-known values re-derived 2026-11-11",
+    "Baseline js/calendar.js self-check (2026-04-11 = JDN 2461142)"
+  ],
+  "retrieved": "2026-11-11",
+  "vectors": [
+    { "jdn": "-290495", "julian": { "year": "-5508", "month": 9, "day": 1 }, "gregorian": { "year": "-5508", "month": 7, "day": 19 }, "dayOfWeek": 5, "note": "Byzantine era epoch day, 1 Sep 5509 BC Julian (negative JDN)" },
+    { "jdn": "0", "julian": { "year": "-4712", "month": 1, "day": 1 }, "gregorian": { "year": "-4713", "month": 11, "day": 24 }, "dayOfWeek": 0, "note": "JDN 0: Monday 1 Jan 4713 BC Julian" },
+    { "jdn": "1704987", "julian": { "year": "-44", "month": 1, "day": 1 }, "dayOfWeek": 4, "note": "1 Jan 45 BC Julian: institution of the Julian calendar" },
+    { "jdn": "1721424", "julian": { "year": "1", "month": 1, "day": 1 }, "dayOfWeek": 5, "note": "1 Jan AD 1 Julian" },
+    { "jdn": "1721426", "gregorian": { "year": "1", "month": 1, "day": 1 }, "dayOfWeek": 0, "note": "1 Jan AD 1 proleptic Gregorian (R.D. 1)" },
+    { "jdn": "1733205", "julian": { "year": "33", "month": 4, "day": 4 }, "gregorian": { "year": "33", "month": 4, "day": 2 }, "dayOfWeek": 5, "note": "Sabbath #1" },
+    { "jdn": "2299160", "julian": { "year": "1582", "month": 10, "day": 4 }, "gregorian": { "year": "1582", "month": 10, "day": 14 }, "dayOfWeek": 3, "note": "last Julian day in Rome (Thursday)" },
+    { "jdn": "2299161", "julian": { "year": "1582", "month": 10, "day": 5 }, "gregorian": { "year": "1582", "month": 10, "day": 15 }, "dayOfWeek": 4, "note": "first Gregorian day in Rome (Friday)" },
+    { "jdn": "2400001", "gregorian": { "year": "1858", "month": 11, "day": 17 }, "dayOfWeek": 2, "note": "MJD 0" },
+    { "jdn": "2440588", "gregorian": { "year": "1970", "month": 1, "day": 1 }, "dayOfWeek": 3, "note": "Unix epoch" },
+    { "jdn": "2451545", "gregorian": { "year": "2000", "month": 1, "day": 1 }, "julian": { "year": "1999", "month": 12, "day": 19 }, "dayOfWeek": 5, "note": "J2000.0 (Meeus)" },
+    { "jdn": "2461142", "gregorian": { "year": "2026", "month": 4, "day": 11 }, "dayOfWeek": 5, "note": "baseline self-check, Sabbath #103,992" },
+    { "jdn": "2461317", "gregorian": { "year": "2026", "month": 10, "day": 3 }, "julian": { "year": "2026", "month": 9, "day": 20 }, "dayOfWeek": 5, "note": "concept drawing, Sabbath #104,017" }
+  ]
+}
