@@ -71,9 +71,7 @@ test('T-REG-03 COMPAT-06: the anchor reads 2 April AD 33 in the Gregorian row an
   assert.deepEqual([u.year, u.month, u.day], [33n, 4, 4]);
   assert.deepEqual(v1.gregFromJdn(v1.ANCHOR_JDN), { year: 33, month: 4, day: 2 });
 });
-test.todo('T-REG-04 COMPAT-07 anniversary rule, exhaustive 33–3000 (Phase 3, sabbath-row-rules)');
-test.todo('T-REG-05 COMPAT-08 milestone rule (Phase 3)');
-test.todo('T-REG-07 COMPAT-12 fmtInt with U+2212 (Phase 3, format)');
+// T-REG-04 (anniversary rule), T-REG-05 (milestone) and T-REG-07 (fmtInt) live in test/timeline.test.js.
 test('T-REG-20 COMPAT-04: v2 Gregorian adapter equals the baseline functions for every day 33–3000 and 10^6 random JDNs in ±10^9', () => {
   for (let y = 33; y <= 3000; y++) for (let m = 1; m <= 12; m++) {
     const n = v1.daysInMonth(y, m);
