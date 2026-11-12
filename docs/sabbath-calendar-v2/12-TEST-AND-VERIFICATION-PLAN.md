@@ -115,6 +115,19 @@ Plus a browser-level smoke suite for the UI and an integrity panel at runtime.
 | T-UI-07 | axe-core: no serious violations |
 | T-UI-08 | Mobile 375 px: rows collapse; cursor card lists all calendars |
 
+### 7.1 Phase 3 verification record (2026-11-11, Chromium 156 in the desktop app's browser pane)
+
+| ID | Result |
+|---|---|
+| T-UI-01 | Go-to Sabbath −210,562 → cursor card "Sabbath #−210,562", JDN 259,264; Julian/Gregorian CONVENTIONAL, Hebrew/Chinese UNSUPPORTED with reasons shown on the collapsed rows ✓ |
+| T-UI-02 | Go-to preview states the calendar and certainty before the jump; a Chinese date "2025, leap month 6, day 1" previews 25 July 2025 and jumps there ✓; invalid input disables Go ✓ |
+| T-UI-03 | Automated: every row ≤ 400 ticks and < 50 ms at four cursors × every zoom level (test/timeline.test.js) ✓ |
+| T-UI-04 | Arrow (pan 10 %), Shift+Arrow (one Sabbath), Home (#1), −/+ (zoom) verified ✓ (the browser tool's own key emulation did not deliver "−"; a synthetic KeyboardEvent and the toolbar buttons do) |
+| T-UI-05 | Reload with `#j=…&z=…` restores the view ✓; the hash follows every cursor move ✓ |
+| T-UI-06 | All rows re-label on every cursor change (drag, keys, go-to) ✓ |
+| T-UI-07 | axe-core not run yet — rows carry ARIA roles/labels, badges carry text |
+| T-UI-08 | 375 px viewport: toolbar wraps, Hebrew/Chinese rows collapsed by default, cursor card lists all calendars ✓ |
+
 ## 8. Traceability matrix (requirement → tests)
 
 | Requirement | Tests |

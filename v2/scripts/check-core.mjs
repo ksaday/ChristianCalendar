@@ -14,6 +14,7 @@ const layers = {
   core:      { allowed: [/^\.\/[a-z-]+\.js$/] },
   calendars: { allowed: [/^\.\/[a-z-]+\.js$/, /^\.\.\/core\/[a-z-]+\.js$/, /^\.\/chinese\/[a-z-]+\.js$/] },
   'calendars/chinese': { allowed: [/^\.\/[a-z-]+\.js$/, /^\.\.\/[a-z-]+\.js$/, /^\.\.\/\.\.\/core\/[a-z-]+\.js$/] },
+  timeline:  { allowed: [/^\.\/[a-z-]+\.js$/, /^\.\.\/core\/[a-z-]+\.js$/, /^\.\.\/calendars\/[a-z-]+\.js$/, /^\.\.\/ui\/format\.js$/] },
 };
 const problems = [];
 const stripComments = (s) => s.replace(/\/\*[\s\S]*?\*\//g, '').replace(/\/\/.*$/gm, '');

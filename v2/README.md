@@ -1,22 +1,23 @@
-# Sabbath Calendar v2 — Phase 1: Chronology Core
+# Sabbath Calendar v2
 
 This directory holds the second-generation Sabbath Calendar. The original application in the
 repository root is the reference implementation and is never modified (design package:
 `../docs/sabbath-calendar-v2/`, approved 2026-11-11).
 
-## Phase 1 contents
+Open `index.html` (served over HTTP or from a static host; ES modules need a server for `file://` in some browsers). Phases 1–3 of the roadmap are implemented.
+
+## Contents
 
 ```
 v2/
-├── src/core/
-│   ├── bigint-math.js   toBigInt, floorDiv, floorMod (floor semantics for negatives)
-│   ├── chronology.js    ANCHOR_JDN, sabbathJdn, sabbathIndexOf, cycleOf, dayOfWeek, prev/next, describeDay …
-│   ├── invariants.js    verifyInvariants({seed, samples, magnitude}) — seeded, reproducible
-│   └── index.js         public surface
-├── test/                node:test suites (core, negative, invariants, regression vs baseline, property)
-│   ├── fixtures/baseline-v1.js   verbatim copy of the original js/calendar.js math (test oracle)
-│   └── browser/invariants.html   runs the same self-test in a browser for cross-engine comparison
-└── scripts/check-core.mjs        core purity check (imports, forbidden identifiers, literals)
+├── index.html                    the synchronized timeline application
+├── src/core/                     Chronology Core (BigInt): bigint-math, chronology, invariants
+├── src/calendars/                adapters: gregorian, julian, hebrew, chinese/ (astronomy + rules), registry
+├── src/timeline/                 pure timeline model: zoom ladder, O(visible) ticks, cursor, URL state, Sabbath-row rules
+├── src/ui/                       DOM: app wiring, SVG rows, cursor card, cycle view, go-to dialog, format
+├── src/styles/v2.css             stylesheet (baseline palette)
+├── test/                         node:test suites, reference vectors with provenance, browser self-test page
+└── scripts/check-core.mjs        layer/purity check (imports, forbidden identifiers, literals)
 ```
 
 ## Running

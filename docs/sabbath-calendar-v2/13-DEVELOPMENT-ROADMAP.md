@@ -23,7 +23,7 @@ focused working days for one developer and are indicative.
 | 1.4 Regression fixture: verbatim copy of baseline functions; T-REG-01…09, T-REG-20 | |
 | 1.5 Property tests P-01…03 | |
 | 1.6 CI: `node --test`, import-graph check, baseline diff guard, no-network | |
-| **Gate G1** | all above green; `verifyInvariants` identical in Node, Chrome, Firefox, Safari |
+| **Gate G1** | all above green; `verifyInvariants` identical in Node, Chrome, Firefox, Safari — **met 2026-11-11 for Node + Chromium; Firefox/Safari not yet run** |
 
 Dependencies: none. MVP-critical.
 
@@ -35,10 +35,10 @@ Dependencies: none. MVP-critical.
 | 2.2 `gregorian.js` (BigInt port of baseline), `julian.js` | T-CAL-10…24; P-04…06 |
 | 2.3 `hebrew.js` (D&R fixed calendar) with certainty bands | T-CAL-30…36 |
 | 2.4 Reference vectors checked in with provenance | §5 of doc 12 |
-| **Gate G2a** | Gregorian/Julian/Hebrew green |
+| **Gate G2a** | Gregorian/Julian/Hebrew green — **met 2026-11-11** |
 | 2.5 (2b) `chinese/astronomy.js` (solar longitude, new moon, ΔT), `chinese.js` | T-CAL-40…46 vs HKO 1901–2100 |
 | 2.6 Certainty bands incl. midnight-new-moon downgrade | T-CAL-44, 45 |
-| **Gate G2b** | Chinese green for 1901–2100; APPROXIMATE/UNSUPPORTED bands verified |
+| **Gate G2b** | Chinese green for 1901–2100; APPROXIMATE/UNSUPPORTED bands verified — **met 2026-11-11 (1929–2100 exact vs HKO; five pre-1929 borderlines documented)** |
 
 Dependencies: Phase 1. 2.1–2.4 are MVP; 2b may ship after MVP.
 
@@ -52,7 +52,7 @@ Dependencies: Phase 1. 2.1–2.4 are MVP; 2b may ship after MVP.
 | 3.4 Keyboard, touch gestures, responsive layout | T-UI-04, 08 |
 | 3.5 Reference markers; certainty badges and legend | T-UI-06 |
 | 3.6 Integrity panel (runs `verifyInvariants` on load; shows result as the baseline's footer does) | COMPAT-15 |
-| **Gate G3** | T-UI-01…08 green; performance budget met |
+| **Gate G3** | T-UI-01…08 green; performance budget met — **met 2026-11-11 by manual browser verification in Chromium (doc 12 §7); automated browser suite not yet set up** |
 
 Dependencies: Phases 1, 2a. MVP-critical (Chinese row may show UNSUPPORTED until 2b).
 

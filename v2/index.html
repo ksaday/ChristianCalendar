@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>The Sabbath Calendar — one unbroken seven-day cycle</title>
+<meta name="description" content="A mathematically exact, continuously numbered Sabbath calendar anchored at Saturday 4 April AD 33 (JDN 1,733,205), synchronized with the Julian, Gregorian, Hebrew and Chinese calendars.">
+<link rel="stylesheet" href="src/styles/v2.css">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns=%27http://www.w3.org/2000/svg%27 viewBox=%270 0 32 32%27%3E%3Crect width=%2732%27 height=%2732%27 rx=%276%27 fill=%27%231B2240%27/%3E%3Ctext x=%2716%27 y=%2722%27 font-size=%2718%27 text-anchor=%27middle%27 fill=%27%23B0842C%27 font-family=%27serif%27%3E7%3C/text%3E%3C/svg%3E">
+</head>
+<body>
+
+<header class="site-header">
+  <div class="header-inner">
+    <p class="eyebrow">One unbroken seven-day cycle · unbounded in both directions</p>
+    <h1>The Sabbath Calendar</h1>
+    <p class="tagline">Sabbath&nbsp;<span class="seal-num">#1</span> = Saturday, 4&nbsp;April AD&nbsp;33 (Julian) · Julian Day Number 1,733,205</p>
+  </div>
+</header>
+
+<nav class="toolbar" aria-label="Timeline controls">
+  <button id="gotoBtn" class="btn btn-gold" title="Go to a Sabbath number, JDN or date (G)">Go to…</button>
+  <button id="todayBtn" class="btn" title="Today (T)">Today</button>
+  <button id="anchorBtn" class="btn" title="Sabbath #1 (Home)">#1</button>
+  <span class="control-gap" aria-hidden="true"></span>
+  <button id="zoomOutBtn" class="btn" aria-label="Zoom out" title="Zoom out (−)">−</button>
+  <span id="zoomLabel" class="zoom-label" aria-live="polite">Week</span>
+  <button id="zoomInBtn" class="btn" aria-label="Zoom in" title="Zoom in (+)">+</button>
+  <span class="control-gap" aria-hidden="true"></span>
+  <label class="inline">Era <select id="eraSel" class="btn"><option value="BC/AD">BC / AD</option><option value="BCE/CE">BCE / CE</option></select></label>
+  <details class="rows-menu">
+    <summary class="btn">Rows</summary>
+    <div class="rows-list">
+      <label><input type="checkbox" data-row="julian" checked> Julian</label>
+      <label><input type="checkbox" data-row="gregorian" checked> Gregorian</label>
+      <label><input type="checkbox" data-row="hebrew" checked> Hebrew</label>
+      <label><input type="checkbox" data-row="chinese" checked> Chinese</label>
+      <label><input type="checkbox" data-row="markers" checked> Markers</label>
+    </div>
+  </details>
+  <span class="control-gap grow" aria-hidden="true"></span>
+  <span id="integrity" class="integrity" role="status" title="Invariant self-test of the chronology core">Integrity: running…</span>
+</nav>
+
+<main class="page-body">
+  <section class="timeline-section" aria-label="Synchronized timelines">
+    <div id="timeline" class="timeline" tabindex="0" aria-label="Timeline. Arrow keys pan, Shift+arrows move one Sabbath, plus and minus zoom.">
+      <svg id="rows" xmlns="http://www.w3.org/2000/svg" role="group" aria-label="Calendar rows"></svg>
+    </div>
+    <ul class="legend" aria-label="Legend">
+      <li><span class="badge EXACT">exact</span> by rule, in force</li>
+      <li><span class="badge CONVENTIONAL">conventional</span> proleptic / calculated</li>
+      <li><span class="badge APPROXIMATE">approximate</span> reconstruction</li>
+      <li><span class="badge UNSUPPORTED">unsupported</span> no defensible label</li>
+      <li><span class="swatch swatch-gold"></span> Sabbath seal</li>
+      <li><span class="swatch swatch-pre"></span> Sabbath ≤ #0 (projection)</li>
+      <li><span class="swatch swatch-wine"></span> milestone (every 1,000th)</li>
+      <li><span class="star-key">✦</span> Anniversary Sabbath</li>
+      <li><span class="swatch swatch-olive"></span> today</li>
+    </ul>
+  </section>
+
+  <section class="panels">
+    <div id="cursorCard" class="card cursor-card" aria-live="polite" aria-label="Cursor details"></div>
+    <div id="cycleView" class="card cycle-view" aria-label="Seven-day cycle"></div>
+  </section>
+</main>
+
+<dialog id="gotoDialog" class="goto" aria-label="Go to">
+  <form method="dialog" id="gotoForm">
+    <h2>Go to</h2>
+    <div id="gotoModes" class="goto-modes"></div>
+    <div id="gotoFields" class="goto-fields"></div>
+    <p id="gotoPreview" class="goto-preview" aria-live="polite"></p>
+    <div class="goto-actions">
+      <button type="button" id="gotoCancel" class="btn">Cancel</button>
+      <button type="submit" id="gotoGo" class="btn btn-gold">Go</button>
+    </div>
+  </form>
+</dialog>
+
+<footer class="site-footer">
+  <div class="footer-inner">
+    <p class="verse">&ldquo;There remaineth therefore a rest to the people of God.&rdquo;<span class="verse-ref">&mdash; Hebrews&nbsp;4:9</span></p>
+    <p class="method">Method: continuous Julian Day Number counting in arbitrary-precision integers &mdash; Sabbath #n = JDN 1,733,205 + 7&times;(n&minus;1). The seven-day week ran unbroken through the 1582 reform. Sabbath numbers before #1 are a mathematical projection of the cycle and make no claim about observance. Calendar labels carry their own certainty: proleptic Gregorian and Julian dates, calculated Hebrew dates before 922&nbsp;CE, and Chinese dates before 1929 are conventions or reconstructions, never asserted as observed dates.</p>
+    <p class="method">Reference application: <a href="../index.html">The Christian Calendar</a> (unchanged). Design package: <code>docs/sabbath-calendar-v2/</code>.</p>
+    <p id="selfCheck" class="selfcheck"></p>
+  </div>
+</footer>
+
+<script type="module" src="src/ui/app.js"></script>
+</body>
+</html>

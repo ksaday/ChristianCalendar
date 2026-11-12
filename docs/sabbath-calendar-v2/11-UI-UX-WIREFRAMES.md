@@ -46,7 +46,7 @@ cursor, with Sabbath #1 marked by a cross and labels such as "Sabbath #−1", "S
 │ Gregorian 3 Oct 2026            [EXACT]       │  ◄ prev cycle                                     next cycle ►   │
 │ Hebrew   22 Tishri 5787 (Shemini Atzeret) [EXACT]  note: Hebrew day began at sunset 2 Oct                        │
 │ Chinese  丙午 year, month 8, day 23   [EXACT] │                                                                   │
-│ Weeks since #1: 104,016  · Years ≈ 1,993.4    │                                                                   │
+│ Weeks since #1: 104,016  · Years ≈ 1,993.5    │                                                                   │
 └──────────────────────────────────────────────────────────────────────────────────────────┘
 Legend: ■ EXACT  □ CONVENTIONAL (proleptic/calculated)  ▨ APPROXIMATE (reconstruction)  — UNSUPPORTED  ◇ tradition marker (interpretation)
 ```
