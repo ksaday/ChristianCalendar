@@ -31,6 +31,16 @@ test('reference vectors (Hebcal holiday dates; anchor calculated label)', () => 
   assert.equal(hebrew.format(hebrew.fromJdn(1_733_205n)), '15 Nisan AM 3793');
 });
 
+test('reference vectors (Hebcal converter API, 60 dates 1600–2200 and edges)', () => {
+  const hv = JSON.parse(readFileSync(new URL('./vectors/hebrew-hebcal.json', import.meta.url), 'utf8')).vectors;
+  assert.equal(hv.length, 60);
+  for (const v of hv) {
+    const j = gregorian.toJdn({ year: BigInt(v.gregorian.year), month: v.gregorian.month, day: v.gregorian.day });
+    const h = hebrew.fromJdn(j);
+    assert.deepEqual([h.year, h.month, h.day], [BigInt(v.hebrew.year), v.hebrew.month, v.hebrew.day], `${v.gregorian.year}-${v.gregorian.month}-${v.gregorian.day} (Hebcal ${v.hebrew.day} ${v.hebcalMonthName} ${v.hebrew.year})`);
+  }
+});
+
 test('T-CAL-31 round trip: every day of every 7th year AM 1…10,000 plus every month start of every year', () => {
   for (let y = 1n; y <= 10_000n; y++) {
     const last = lastMonthOfYear(y);

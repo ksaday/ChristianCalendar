@@ -64,7 +64,7 @@ Dependencies: Phases 1, 2a. MVP-critical (Chinese row may show UNSUPPORTED until
 | 4.2 Cross-engine runs (Node, three browsers, three timezones) | T-NF-01 |
 | 4.3 Independent recomputation of 50 random Sabbath indices by a separate script (Python, `-I`) | report |
 | 4.4 Documentation of every discrepancy found in adapters and its certainty handling | doc 14 update |
-| **Gate G4** | release candidate; owner review |
+| **Gate G4** | release candidate; owner review — **met 2026-11-12 with caveats: Firefox not run (not installed), browser harness pages not wired into CI; see v2/test/reports/phase4-verification.md** |
 
 ## Phase 5 — Optional Extensions (each separately approved)
 

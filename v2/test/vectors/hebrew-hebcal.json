@@ -1,0 +1,786 @@
+{
+ "description": "Independent Hebrew calendar vectors from the Hebcal converter API (https://www.hebcal.com/converter?cfg=json&gy=\u2026&gm=\u2026&gd=\u2026&g2h=1), 60 Gregorian dates (54 seeded-random 1600\u20132200 plus six edge dates). Hebcal treats the Gregorian input as proleptic Gregorian. Month numbering as in src/calendars/hebrew.js (1 = Nisan \u2026 7 = Tishri \u2026 12 = Adar/Adar I, 13 = Adar II).",
+ "retrieved": "2026-11-11",
+ "vectors": [
+  {
+   "gregorian": {
+    "year": "922",
+    "month": 9,
+    "day": 1
+   },
+   "hebrew": {
+    "year": "4682",
+    "month": 5,
+    "day": 30
+   },
+   "hebcalMonthName": "Av"
+  },
+  {
+   "gregorian": {
+    "year": "1582",
+    "month": 10,
+    "day": 4
+   },
+   "hebrew": {
+    "year": "5343",
+    "month": 7,
+    "day": 8
+   },
+   "hebcalMonthName": "Tishrei"
+  },
+  {
+   "gregorian": {
+    "year": "1582",
+    "month": 10,
+    "day": 15
+   },
+   "hebrew": {
+    "year": "5343",
+    "month": 7,
+    "day": 19
+   },
+   "hebcalMonthName": "Tishrei"
+  },
+  {
+   "gregorian": {
+    "year": "1607",
+    "month": 11,
+    "day": 7
+   },
+   "hebrew": {
+    "year": "5368",
+    "month": 8,
+    "day": 17
+   },
+   "hebcalMonthName": "Cheshvan"
+  },
+  {
+   "gregorian": {
+    "year": "1616",
+    "month": 4,
+    "day": 12
+   },
+   "hebrew": {
+    "year": "5376",
+    "month": 1,
+    "day": 25
+   },
+   "hebcalMonthName": "Nisan"
+  },
+  {
+   "gregorian": {
+    "year": "1631",
+    "month": 7,
+    "day": 13
+   },
+   "hebrew": {
+    "year": "5391",
+    "month": 4,
+    "day": 13
+   },
+   "hebcalMonthName": "Tamuz"
+  },
+  {
+   "gregorian": {
+    "year": "1637",
+    "month": 6,
+    "day": 18
+   },
+   "hebrew": {
+    "year": "5397",
+    "month": 3,
+    "day": 26
+   },
+   "hebcalMonthName": "Sivan"
+  },
+  {
+   "gregorian": {
+    "year": "1644",
+    "month": 3,
+    "day": 25
+   },
+   "hebrew": {
+    "year": "5404",
+    "month": 13,
+    "day": 17
+   },
+   "hebcalMonthName": "Adar II"
+  },
+  {
+   "gregorian": {
+    "year": "1667",
+    "month": 6,
+    "day": 24
+   },
+   "hebrew": {
+    "year": "5427",
+    "month": 4,
+    "day": 2
+   },
+   "hebcalMonthName": "Tamuz"
+  },
+  {
+   "gregorian": {
+    "year": "1675",
+    "month": 1,
+    "day": 16
+   },
+   "hebrew": {
+    "year": "5435",
+    "month": 10,
+    "day": 18
+   },
+   "hebcalMonthName": "Tevet"
+  },
+  {
+   "gregorian": {
+    "year": "1677",
+    "month": 11,
+    "day": 4
+   },
+   "hebrew": {
+    "year": "5438",
+    "month": 8,
+    "day": 9
+   },
+   "hebcalMonthName": "Cheshvan"
+  },
+  {
+   "gregorian": {
+    "year": "1677",
+    "month": 11,
+    "day": 7
+   },
+   "hebrew": {
+    "year": "5438",
+    "month": 8,
+    "day": 12
+   },
+   "hebcalMonthName": "Cheshvan"
+  },
+  {
+   "gregorian": {
+    "year": "1682",
+    "month": 1,
+    "day": 16
+   },
+   "hebrew": {
+    "year": "5442",
+    "month": 11,
+    "day": 7
+   },
+   "hebcalMonthName": "Sh'vat"
+  },
+  {
+   "gregorian": {
+    "year": "1709",
+    "month": 7,
+    "day": 28
+   },
+   "hebrew": {
+    "year": "5469",
+    "month": 5,
+    "day": 21
+   },
+   "hebcalMonthName": "Av"
+  },
+  {
+   "gregorian": {
+    "year": "1712",
+    "month": 6,
+    "day": 14
+   },
+   "hebrew": {
+    "year": "5472",
+    "month": 3,
+    "day": 10
+   },
+   "hebcalMonthName": "Sivan"
+  },
+  {
+   "gregorian": {
+    "year": "1748",
+    "month": 2,
+    "day": 9
+   },
+   "hebrew": {
+    "year": "5508",
+    "month": 12,
+    "day": 10
+   },
+   "hebcalMonthName": "Adar I"
+  },
+  {
+   "gregorian": {
+    "year": "1760",
+    "month": 8,
+    "day": 11
+   },
+   "hebrew": {
+    "year": "5520",
+    "month": 5,
+    "day": 29
+   },
+   "hebcalMonthName": "Av"
+  },
+  {
+   "gregorian": {
+    "year": "1789",
+    "month": 8,
+    "day": 6
+   },
+   "hebrew": {
+    "year": "5549",
+    "month": 5,
+    "day": 14
+   },
+   "hebcalMonthName": "Av"
+  },
+  {
+   "gregorian": {
+    "year": "1795",
+    "month": 12,
+    "day": 14
+   },
+   "hebrew": {
+    "year": "5556",
+    "month": 10,
+    "day": 2
+   },
+   "hebcalMonthName": "Tevet"
+  },
+  {
+   "gregorian": {
+    "year": "1807",
+    "month": 3,
+    "day": 6
+   },
+   "hebrew": {
+    "year": "5567",
+    "month": 12,
+    "day": 26
+   },
+   "hebcalMonthName": "Adar I"
+  },
+  {
+   "gregorian": {
+    "year": "1830",
+    "month": 7,
+    "day": 17
+   },
+   "hebrew": {
+    "year": "5590",
+    "month": 4,
+    "day": 26
+   },
+   "hebcalMonthName": "Tamuz"
+  },
+  {
+   "gregorian": {
+    "year": "1843",
+    "month": 5,
+    "day": 10
+   },
+   "hebrew": {
+    "year": "5603",
+    "month": 2,
+    "day": 10
+   },
+   "hebcalMonthName": "Iyyar"
+  },
+  {
+   "gregorian": {
+    "year": "1844",
+    "month": 12,
+    "day": 17
+   },
+   "hebrew": {
+    "year": "5605",
+    "month": 10,
+    "day": 7
+   },
+   "hebcalMonthName": "Tevet"
+  },
+  {
+   "gregorian": {
+    "year": "1848",
+    "month": 4,
+    "day": 11
+   },
+   "hebrew": {
+    "year": "5608",
+    "month": 1,
+    "day": 8
+   },
+   "hebcalMonthName": "Nisan"
+  },
+  {
+   "gregorian": {
+    "year": "1875",
+    "month": 8,
+    "day": 13
+   },
+   "hebrew": {
+    "year": "5635",
+    "month": 5,
+    "day": 12
+   },
+   "hebcalMonthName": "Av"
+  },
+  {
+   "gregorian": {
+    "year": "1878",
+    "month": 9,
+    "day": 7
+   },
+   "hebrew": {
+    "year": "5638",
+    "month": 6,
+    "day": 9
+   },
+   "hebcalMonthName": "Elul"
+  },
+  {
+   "gregorian": {
+    "year": "1880",
+    "month": 2,
+    "day": 26
+   },
+   "hebrew": {
+    "year": "5640",
+    "month": 12,
+    "day": 14
+   },
+   "hebcalMonthName": "Adar"
+  },
+  {
+   "gregorian": {
+    "year": "1885",
+    "month": 5,
+    "day": 9
+   },
+   "hebrew": {
+    "year": "5645",
+    "month": 2,
+    "day": 24
+   },
+   "hebcalMonthName": "Iyyar"
+  },
+  {
+   "gregorian": {
+    "year": "1892",
+    "month": 11,
+    "day": 8
+   },
+   "hebrew": {
+    "year": "5653",
+    "month": 8,
+    "day": 18
+   },
+   "hebcalMonthName": "Cheshvan"
+  },
+  {
+   "gregorian": {
+    "year": "1893",
+    "month": 1,
+    "day": 5
+   },
+   "hebrew": {
+    "year": "5653",
+    "month": 10,
+    "day": 17
+   },
+   "hebcalMonthName": "Tevet"
+  },
+  {
+   "gregorian": {
+    "year": "1894",
+    "month": 6,
+    "day": 4
+   },
+   "hebrew": {
+    "year": "5654",
+    "month": 2,
+    "day": 29
+   },
+   "hebcalMonthName": "Iyyar"
+  },
+  {
+   "gregorian": {
+    "year": "1912",
+    "month": 2,
+    "day": 13
+   },
+   "hebrew": {
+    "year": "5672",
+    "month": 11,
+    "day": 25
+   },
+   "hebcalMonthName": "Sh'vat"
+  },
+  {
+   "gregorian": {
+    "year": "1923",
+    "month": 2,
+    "day": 27
+   },
+   "hebrew": {
+    "year": "5683",
+    "month": 12,
+    "day": 11
+   },
+   "hebcalMonthName": "Adar"
+  },
+  {
+   "gregorian": {
+    "year": "1938",
+    "month": 5,
+    "day": 27
+   },
+   "hebrew": {
+    "year": "5698",
+    "month": 2,
+    "day": 26
+   },
+   "hebcalMonthName": "Iyyar"
+  },
+  {
+   "gregorian": {
+    "year": "1952",
+    "month": 8,
+    "day": 14
+   },
+   "hebrew": {
+    "year": "5712",
+    "month": 5,
+    "day": 23
+   },
+   "hebcalMonthName": "Av"
+  },
+  {
+   "gregorian": {
+    "year": "1958",
+    "month": 11,
+    "day": 26
+   },
+   "hebrew": {
+    "year": "5719",
+    "month": 9,
+    "day": 14
+   },
+   "hebcalMonthName": "Kislev"
+  },
+  {
+   "gregorian": {
+    "year": "1993",
+    "month": 9,
+    "day": 24
+   },
+   "hebrew": {
+    "year": "5754",
+    "month": 7,
+    "day": 9
+   },
+   "hebcalMonthName": "Tishrei"
+  },
+  {
+   "gregorian": {
+    "year": "2000",
+    "month": 1,
+    "day": 1
+   },
+   "hebrew": {
+    "year": "5760",
+    "month": 10,
+    "day": 23
+   },
+   "hebcalMonthName": "Tevet"
+  },
+  {
+   "gregorian": {
+    "year": "2003",
+    "month": 3,
+    "day": 9
+   },
+   "hebrew": {
+    "year": "5763",
+    "month": 13,
+    "day": 5
+   },
+   "hebcalMonthName": "Adar II"
+  },
+  {
+   "gregorian": {
+    "year": "2015",
+    "month": 3,
+    "day": 25
+   },
+   "hebrew": {
+    "year": "5775",
+    "month": 1,
+    "day": 5
+   },
+   "hebcalMonthName": "Nisan"
+  },
+  {
+   "gregorian": {
+    "year": "2025",
+    "month": 6,
+    "day": 6
+   },
+   "hebrew": {
+    "year": "5785",
+    "month": 3,
+    "day": 10
+   },
+   "hebcalMonthName": "Sivan"
+  },
+  {
+   "gregorian": {
+    "year": "2026",
+    "month": 4,
+    "day": 2
+   },
+   "hebrew": {
+    "year": "5786",
+    "month": 1,
+    "day": 15
+   },
+   "hebcalMonthName": "Nisan"
+  },
+  {
+   "gregorian": {
+    "year": "2026",
+    "month": 9,
+    "day": 12
+   },
+   "hebrew": {
+    "year": "5787",
+    "month": 7,
+    "day": 1
+   },
+   "hebcalMonthName": "Tishrei"
+  },
+  {
+   "gregorian": {
+    "year": "2055",
+    "month": 5,
+    "day": 12
+   },
+   "hebrew": {
+    "year": "5815",
+    "month": 2,
+    "day": 14
+   },
+   "hebcalMonthName": "Iyyar"
+  },
+  {
+   "gregorian": {
+    "year": "2063",
+    "month": 11,
+    "day": 6
+   },
+   "hebrew": {
+    "year": "5824",
+    "month": 8,
+    "day": 14
+   },
+   "hebcalMonthName": "Cheshvan"
+  },
+  {
+   "gregorian": {
+    "year": "2076",
+    "month": 11,
+    "day": 5
+   },
+   "hebrew": {
+    "year": "5837",
+    "month": 8,
+    "day": 9
+   },
+   "hebcalMonthName": "Cheshvan"
+  },
+  {
+   "gregorian": {
+    "year": "2083",
+    "month": 8,
+    "day": 26
+   },
+   "hebrew": {
+    "year": "5843",
+    "month": 6,
+    "day": 12
+   },
+   "hebcalMonthName": "Elul"
+  },
+  {
+   "gregorian": {
+    "year": "2089",
+    "month": 5,
+    "day": 5
+   },
+   "hebrew": {
+    "year": "5849",
+    "month": 2,
+    "day": 25
+   },
+   "hebcalMonthName": "Iyyar"
+  },
+  {
+   "gregorian": {
+    "year": "2096",
+    "month": 8,
+    "day": 23
+   },
+   "hebrew": {
+    "year": "5856",
+    "month": 6,
+    "day": 5
+   },
+   "hebcalMonthName": "Elul"
+  },
+  {
+   "gregorian": {
+    "year": "2105",
+    "month": 4,
+    "day": 15
+   },
+   "hebrew": {
+    "year": "5865",
+    "month": 1,
+    "day": 30
+   },
+   "hebcalMonthName": "Nisan"
+  },
+  {
+   "gregorian": {
+    "year": "2105",
+    "month": 7,
+    "day": 2
+   },
+   "hebrew": {
+    "year": "5865",
+    "month": 4,
+    "day": 19
+   },
+   "hebcalMonthName": "Tamuz"
+  },
+  {
+   "gregorian": {
+    "year": "2113",
+    "month": 10,
+    "day": 19
+   },
+   "hebrew": {
+    "year": "5874",
+    "month": 8,
+    "day": 9
+   },
+   "hebcalMonthName": "Cheshvan"
+  },
+  {
+   "gregorian": {
+    "year": "2123",
+    "month": 10,
+    "day": 26
+   },
+   "hebrew": {
+    "year": "5884",
+    "month": 8,
+    "day": 6
+   },
+   "hebcalMonthName": "Cheshvan"
+  },
+  {
+   "gregorian": {
+    "year": "2135",
+    "month": 5,
+    "day": 3
+   },
+   "hebrew": {
+    "year": "5895",
+    "month": 2,
+    "day": 20
+   },
+   "hebcalMonthName": "Iyyar"
+  },
+  {
+   "gregorian": {
+    "year": "2136",
+    "month": 1,
+    "day": 4
+   },
+   "hebrew": {
+    "year": "5896",
+    "month": 10,
+    "day": 29
+   },
+   "hebcalMonthName": "Tevet"
+  },
+  {
+   "gregorian": {
+    "year": "2156",
+    "month": 8,
+    "day": 9
+   },
+   "hebrew": {
+    "year": "5916",
+    "month": 5,
+    "day": 22
+   },
+   "hebcalMonthName": "Av"
+  },
+  {
+   "gregorian": {
+    "year": "2156",
+    "month": 11,
+    "day": 7
+   },
+   "hebrew": {
+    "year": "5917",
+    "month": 8,
+    "day": 23
+   },
+   "hebcalMonthName": "Cheshvan"
+  },
+  {
+   "gregorian": {
+    "year": "2160",
+    "month": 5,
+    "day": 10
+   },
+   "hebrew": {
+    "year": "5920",
+    "month": 2,
+    "day": 3
+   },
+   "hebcalMonthName": "Iyyar"
+  },
+  {
+   "gregorian": {
+    "year": "2196",
+    "month": 2,
+    "day": 6
+   },
+   "hebrew": {
+    "year": "5956",
+    "month": 11,
+    "day": 6
+   },
+   "hebcalMonthName": "Sh'vat"
+  },
+  {
+   "gregorian": {
+    "year": "2198",
+    "month": 3,
+    "day": 23
+   },
+   "hebrew": {
+    "year": "5958",
+    "month": 13,
+    "day": 15
+   },
+   "hebcalMonthName": "Adar II"
+  }
+ ]
+}

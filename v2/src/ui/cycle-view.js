@@ -47,5 +47,5 @@ export function renderCycleView(root, d, opts) {
   }).join('')}</tr>`).join('');
   root.innerHTML = `<h2>Cycle #${esc(fmtInt(cycle))} <span class="sub">(${esc(gregFirst)} → ${esc(gregLast)}, ending on ${esc(sabbathLabel(cycle))})</span></h2>
     <div class="cycle-nav"><button class="btn jump" data-jdn="${first - 7n}">◀ cycle #${esc(fmtInt(cycle - 1n))}</button><span>Sunday → Saturday · civil days</span><button class="btn jump" data-jdn="${first + 7n}">cycle #${esc(fmtInt(cycle + 1n))} ▶</button></div>
-    <table class="cycle-table"><thead><tr><th scope="col"></th>${head}</tr></thead><tbody><tr><th scope="row">JDN</th>${rowJdn}</tr>${calRows}</tbody></table>`;
+    <table class="cycle-table"><thead><tr><th scope="col"><span class="sr-only">Field</span></th>${head}</tr></thead><tbody><tr><th scope="row">JDN</th>${rowJdn}</tr>${calRows}</tbody></table>`;
 }

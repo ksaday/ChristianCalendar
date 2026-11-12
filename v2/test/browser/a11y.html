@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Sabbath Calendar v2 — accessibility check (axe-core)</title>
+<style>
+  body { font: 14px/1.5 system-ui, sans-serif; margin: 1.5rem; }
+  table { border-collapse: collapse; margin-top: 1rem; } td, th { border: 1px solid #ccc; padding: 4px 8px; vertical-align: top; }
+  .pass { color: #2d6a2d; } .fail { color: #8b1a1a; font-weight: 700; }
+  iframe { width: 1200px; height: 700px; border: 1px solid #999; margin-top: 1rem; }
+</style>
+<script src="../../node_modules/axe-core/axe.min.js"></script>
+</head>
+<body>
+<h1>T-UI-07 — axe-core run against the application (dev dependency, served locally)</h1>
+<p id="status">Running…</p>
+<table id="results"><thead><tr><th>Rule</th><th>Impact</th><th>Nodes</th><th>Help</th><th>Sample targets</th></tr></thead><tbody></tbody></table>
+<iframe id="app" src="../../index.html?v=0.4.0#j=2461317&z=week" title="application under test"></iframe>
+<script>
+  const frame = document.getElementById('app');
+  frame.addEventListener('load', async () => {
+    await new Promise(r => setTimeout(r, 500));
+    // axe must run inside the document it audits: load the same local copy into the (same-origin) frame
+    const doc = frame.contentDocument;
+    await new Promise((res, rej) => { const s = doc.createElement('script'); s.src = new URL('../../node_modules/axe-core/axe.min.js', location.href).href; s.onload = res; s.onerror = rej; doc.head.appendChild(s); });
+    const r = await frame.contentWindow.axe.run(doc, { resultTypes: ['violations', 'incomplete'] });
+    const tb = document.querySelector('#results tbody');
+    for (const v of r.violations) {
+      const tr = document.createElement('tr');
+      tr.innerHTML = `<td>${v.id}</td><td>${v.impact}</td><td>${v.nodes.length}</td><td>${v.help}</td><td>${v.nodes.slice(0, 3).map(n => n.target.join(' ')).join('<br>')}</td>`;
+      tb.appendChild(tr);
+    }
+    const serious = r.violations.filter(v => v.impact === 'serious' || v.impact === 'critical');
+    const st = document.getElementById('status');
+    st.textContent = `axe-core ${frame.contentWindow.axe.version}: ${r.violations.length} violation rule(s) (${serious.length} serious/critical), ${r.incomplete.length} needs-review rule(s)`;
+    st.className = serious.length ? 'fail' : 'pass';
+    window.__axe = r;
+  });
+</script>
+</body>
+</html>

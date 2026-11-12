@@ -51,7 +51,12 @@ function render() {
   if (location.hash !== hash) history.replaceState(null, '', hash);
   document.title = `${state.describe.day.isSabbath ? 'Sabbath #' + fmtInt(state.describe.day.sabbathIndex) : 'Cycle #' + fmtInt(state.describe.day.cycle)} — The Sabbath Calendar`;
 }
-function scheduleRender() { if (!raf) raf = requestAnimationFrame(render); }
+function scheduleRender() {
+  if (raf) return;
+  // A hidden document never fires requestAnimationFrame; fall back to a timer so the URL, title and
+  // DOM still follow the cursor when the tab is in the background (also keeps automated checks honest).
+  raf = (document.hidden || navigator.webdriver) ? setTimeout(render, 0) : requestAnimationFrame(render);
+}
 
 function setCursor(jdn) { state.cursorJdn = jdn; scheduleRender(); }
 function setLevel(l) { if (isLevel(l) && l !== state.level) { state.level = l; scheduleRender(); } }

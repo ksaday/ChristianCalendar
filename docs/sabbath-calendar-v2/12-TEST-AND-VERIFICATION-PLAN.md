@@ -125,8 +125,12 @@ Plus a browser-level smoke suite for the UI and an integrity panel at runtime.
 | T-UI-04 | Arrow (pan 10 %), Shift+Arrow (one Sabbath), Home (#1), −/+ (zoom) verified ✓ (the browser tool's own key emulation did not deliver "−"; a synthetic KeyboardEvent and the toolbar buttons do) |
 | T-UI-05 | Reload with `#j=…&z=…` restores the view ✓; the hash follows every cursor move ✓ |
 | T-UI-06 | All rows re-label on every cursor change (drag, keys, go-to) ✓ |
-| T-UI-07 | axe-core not run yet — rows carry ARIA roles/labels, badges carry text |
+| T-UI-07 | axe-core 4.10.2 via `test/browser/a11y.html` (dev dependency, served locally): 0 violations after fixing two findings (gold-on-white contrast; empty table header) — Phase 4, 2026-11-12 |
 | T-UI-08 | 375 px viewport: toolbar wraps, Hebrew/Chinese rows collapsed by default, cursor card lists all calendars ✓ |
+
+### 7.2 Phase 4 verification record (2026-11-12)
+
+Full report: `v2/test/reports/phase4-verification.md`. Highlights: invariant digest identical in Node 24, JavaScriptCore, Google Chrome 157 headless and the desktop app's Chromium (`v2/scripts/cross-engine.sh`; Firefox not installed); suite green under three timezones; independent Python recomputation of 60 sampled indices (`v2/scripts/independent-recompute.py`) agrees on every field; Hebcal converter agrees on 60 independent dates; UI smoke harness `v2/test/browser/ui-smoke.html` passed 12/12 in a visible browser; axe-core 0 violations.
 
 ## 8. Traceability matrix (requirement → tests)
 

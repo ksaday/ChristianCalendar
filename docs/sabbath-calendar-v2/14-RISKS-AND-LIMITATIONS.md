@@ -48,3 +48,5 @@
 | Pre-1929 Chinese reference meridian handling | Beijing local mean time vs UTC+8; the HKO tables resolve 1906, 1914, 1916, 1920 borderline new moons inconsistently between the two | Compute with 116°25′E before 1929; label APPROXIMATE; margin rule flags each case |
 | Solar-term timing resolution | Meeus low-accuracy solar series ≈ 0.01° ≈ 15 min; 18 of 4,800 HKO solar-term days (1901–2100) differ by one day, all within 15 min of midnight | Leap-month assignment is flagged APPROXIMATE when a major term is within 30 min of a month-boundary midnight; a higher-order solar series is a Phase 5 option |
 | Safari Temporal support | Not stable as of late 2026 (web search) | Temporal not used at runtime |
+| Firefox / SpiderMonkey | Not available on the development machine; core digest verified in V8 and JavaScriptCore only | `scripts/cross-engine.sh` picks Firefox up automatically when installed; CI could add a Firefox job later |
+| Browser harness in CI | `ui-smoke.html` needs a visible browser (frame-scheduled renders stall under headless virtual time) | Run manually or via a real-time browser runner; axe page runs headless |
