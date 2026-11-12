@@ -84,7 +84,7 @@ Invariant per adapter (I8): for all `j` with `support(j).certainty !== 'UNSUPPOR
 
 - `year`: the system stores the **Gregorian year in which the Chinese year began** plus `extras.cycle` (60-year cycle number per the common 2637 BC epoch convention — labeled **[CONVENTION]**, since the Chinese calendar has no canonical epoch) and `extras.stemBranch` (干支 name). The stem–branch name is EXACT for any year; the cycle number is a convention.
 - `month` 1–12 with `leapMonth` flag; `day` 1–30.
-- `extras.newMoonMarginMinutes`: minutes between the month's new moon and the local midnight; when |margin| < 30 the day's `support` is downgraded to APPROXIMATE.
+- `extras.newMoonMarginMinutes`: minutes between the month's new moon and the local midnight; when |margin| < 2 (new moon) — or a major solar term is within 15 minutes of a month-boundary midnight — the day's `support` is downgraded to APPROXIMATE.
 - `support`: EXACT 1929–2100; APPROXIMATE 1645–1928, 2101–2200; UNSUPPORTED otherwise (MVP).
 
 ## 6. Timeline model

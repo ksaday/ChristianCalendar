@@ -3,8 +3,9 @@ import { assertAdapter } from './adapter.js';
 import { gregorian } from './gregorian.js';
 import { julian } from './julian.js';
 import { hebrew } from './hebrew.js';
+import { chinese } from './chinese/chinese.js';
 
-export const adapters = Object.freeze([julian, gregorian, hebrew].map(assertAdapter));
+export const adapters = Object.freeze([julian, gregorian, hebrew, chinese].map(assertAdapter));
 
 const byId = new Map(adapters.map(a => [a.id, a]));
 
@@ -15,4 +16,4 @@ export function getAdapter(id) {
   return a;
 }
 
-export { gregorian, julian, hebrew };
+export { gregorian, julian, hebrew, chinese };

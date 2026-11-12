@@ -77,7 +77,7 @@ Plus a browser-level smoke suite for the UI and an integrity panel at runtime.
 | T-CAL-42 | chinese | Chinese New Year dates 1901–2100 vs HKO |
 | T-CAL-43 | chinese | sexagenary: 2026 = 丙午; 1984 = 甲子; 1645 = 乙酉 |
 | T-CAL-44 | chinese | certainty: 1644 → UNSUPPORTED; 1700 → APPROXIMATE; 1950 → EXACT; 2150 → APPROXIMATE |
-| T-CAL-45 | chinese | new moon within 30 min of midnight → day's certainty APPROXIMATE (synthetic case) |
+| T-CAL-45 | chinese | new moon within 2 min of midnight, or major solar term within 15 min of a month-boundary midnight → certainty APPROXIMATE; at most 25 such months in 1929–2100 |
 | T-CAL-46 | chinese | cross-check vs `Intl.DateTimeFormat('zh-u-ca-chinese')` for 2,000 random days 1950–2050 when available |
 
 ## 5. Reference-vector sources (checked in with URL + retrieval date)

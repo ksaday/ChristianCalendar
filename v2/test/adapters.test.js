@@ -5,7 +5,7 @@ import { adapters, getAdapter } from '../src/calendars/registry.js';
 import { Certainty, isUnsupported, unsupported, support, assertAdapter } from '../src/calendars/adapter.js';
 
 test('registry exposes julian, gregorian, hebrew and validates shape', () => {
-  assert.deepEqual(adapters.map(a => a.id), ['julian', 'gregorian', 'hebrew']);
+  assert.deepEqual(adapters.map(a => a.id), ['julian', 'gregorian', 'hebrew', 'chinese']);
   for (const a of adapters) assertAdapter(a);
   assert.throws(() => getAdapter('nope'), RangeError);
 });

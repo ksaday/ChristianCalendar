@@ -45,5 +45,6 @@
 |---|---|---|
 | Exact JDN for the Julian calendar's institution (1 Jan 45 BC) and the 45 BC–AD 8 leap pattern | Scholarly reconstructions differ (Scaliger, Bennett) | Treat 45 BC–AD 8 as regular proleptic Julian, CONVENTIONAL; optional APPROXIMATE reconstruction in Phase 5.7 |
 | Precise date the fixed Hebrew calendar reached its modern form | Traditionally 359 CE; documented 921/2 CE | EXACT from 922 CE; CONVENTIONAL earlier |
-| Pre-1929 Chinese reference meridian handling | Beijing local mean time vs UTC+8 | Compute with 116°25′E before 1929; label APPROXIMATE |
+| Pre-1929 Chinese reference meridian handling | Beijing local mean time vs UTC+8; the HKO tables resolve 1906, 1914, 1916, 1920 borderline new moons inconsistently between the two | Compute with 116°25′E before 1929; label APPROXIMATE; margin rule flags each case |
+| Solar-term timing resolution | Meeus low-accuracy solar series ≈ 0.01° ≈ 15 min; 18 of 4,800 HKO solar-term days (1901–2100) differ by one day, all within 15 min of midnight | Leap-month assignment is flagged APPROXIMATE when a major term is within 30 min of a month-boundary midnight; a higher-order solar series is a Phase 5 option |
 | Safari Temporal support | Not stable as of late 2026 (web search) | Temporal not used at runtime |

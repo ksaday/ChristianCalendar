@@ -83,13 +83,22 @@ justification (Humphreys & Waddington 1983) and is not re-opened.
 | Mathematical range | 1645–2200 CE declared for the astronomical algorithm (accuracy of the embedded ephemeris); outside that, UNSUPPORTED |
 | Historical range | **EXACT-by-rule:** 1929–2100 (UTC+8 convention, ephemeris accurate). **APPROXIMATE:** 1645–1928 (Beijing local mean time 116°25′E, UTC+7:45:40, and historical computation differences cause rare one-day/one-month deviations near midnight new moons; the Ming/Qing almanacs occasionally differ from modern recomputation); 2101–2200 (ΔT uncertainty). **UNSUPPORTED:** before 1645 in the MVP, because the calendar's definitions (mean vs true moon, mean vs true solar terms, reference meridian, dynastic reforms — over 100 official calendars) changed repeatedly. |
 | Optional later extension | A table-driven historical adapter from published reconstructions: Academia Sinica's Chinese–Western converter (1 CE – 2101 CE; based on *A Sino-Western Calendar for Two Thousand Years*) and Yuk Tung Liu's reconstructions (722 BCE – 2200 CE, from Zhang Peiyu et al., *Zhongguo gudai lifa*, 2008), each labeled APPROXIMATE with the source named; Hong Kong Observatory tables 1901–2100 as EXACT reference. Licensing and redistribution rights must be checked before any table is embedded. |
-| Timezone | All computations in UTC+8 (1929+) or Beijing local mean time (pre-1929); a day boundary near a new moon can flip a month start — flagged APPROXIMATE when the new moon is within ±30 minutes of midnight |
+| Timezone | All computations in UTC+8 (1929+) or Beijing local mean time (pre-1929); a day boundary near a new moon can flip a month start — flagged APPROXIMATE when the new moon is within 2 minutes of midnight (new moons are computed to ~1 minute) or a major solar term within 15 minutes of a month-boundary midnight (solar longitude resolution) |
 | Known limits | ΔT model error for historical dates; the 2033 leap-month anomaly (correctly handled by the solstice rule but a known trap); Vietnamese, Korean (Dangi) and Japanese variants differ and are not this adapter |
 | Cross-check sources | Hong Kong Observatory conversion tables (1901–2100); `Intl.DateTimeFormat('zh-u-ca-chinese')` for modern dates (ICU uses fixed UTC+8 and modern astronomy; not a historical authority) |
 | Display | Sexagenary year (干支), month number with 閏 for leap months, day number; the cyclical year name is EXACT wherever the year is, since the 60-cycle is a pure count |
 
 The MVP ships the Chinese adapter as UNSUPPORTED before 1645 rather than show a fabricated
 dynastic date. This is a deliberate accuracy decision (ADR-006) and is listed for approval.
+
+**Validation result (Phase 2b, 2026-11-11).** The implemented adapter was compared with the
+Hong Kong Observatory tables for every lunar month start of 1901–2100 (2,474 months, 73 leap
+months): 1929–2100 agree completely (month number, leap flag, first day). 1901–1928 show three
+disagreements, each a documented borderline: a new moon 7.8 minutes before local midnight
+(April 1906) and a major solar term 2–4 minutes before a month-boundary midnight (1917, 1922),
+below the ~15-minute resolution of the Meeus low-accuracy solar series. The tables themselves
+appear to mix UTC+8 and Beijing local mean time before 1929. All three fall in the declared
+APPROXIMATE band and are flagged by the adapter's margin rule.
 
 ## 6. "Additional calendars" extension points
 

@@ -12,7 +12,8 @@ import { fileURLToPath } from 'node:url';
 const srcRoot = join(dirname(fileURLToPath(import.meta.url)), '..', 'src');
 const layers = {
   core:      { allowed: [/^\.\/[a-z-]+\.js$/] },
-  calendars: { allowed: [/^\.\/[a-z-]+\.js$/, /^\.\.\/core\/[a-z-]+\.js$/] },
+  calendars: { allowed: [/^\.\/[a-z-]+\.js$/, /^\.\.\/core\/[a-z-]+\.js$/, /^\.\/chinese\/[a-z-]+\.js$/] },
+  'calendars/chinese': { allowed: [/^\.\/[a-z-]+\.js$/, /^\.\.\/[a-z-]+\.js$/, /^\.\.\/\.\.\/core\/[a-z-]+\.js$/] },
 };
 const problems = [];
 const stripComments = (s) => s.replace(/\/\*[\s\S]*?\*\//g, '').replace(/\/\/.*$/gm, '');
