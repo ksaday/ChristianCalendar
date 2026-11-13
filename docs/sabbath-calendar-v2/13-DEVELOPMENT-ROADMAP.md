@@ -64,18 +64,18 @@ Dependencies: Phases 1, 2a. MVP-critical (Chinese row may show UNSUPPORTED until
 | 4.2 Cross-engine runs (Node, three browsers, three timezones) | T-NF-01 |
 | 4.3 Independent recomputation of 50 random Sabbath indices by a separate script (Python, `-I`) | report |
 | 4.4 Documentation of every discrepancy found in adapters and its certainty handling | doc 14 update |
-| **Gate G4** | release candidate; owner review — **met 2026-11-12 with caveats: Firefox not run (not installed), browser harness pages not wired into CI; see v2/test/reports/phase4-verification.md** |
+| **Gate G4** | release candidate; owner review — **met 2026-11-12 with caveats: Firefox not run (not installed), browser harness pages not wired into CI (the second caveat closed 2026-11-13: `npm run check:browser` in CI); see v2/test/reports/phase4-verification.md** |
 
 ## Phase 5 — Optional Extensions (each separately approved)
 
 | Extension | Notes | Estimate |
 |---|---|---|
 | 5.1 Religious boundary layer (Friday sunset): location input, NOAA solar-position algorithm, labeled "observance window" | Never changes the civil cycle | 3 days |
-| 5.2 Tradition Markers module (doc 08 §4) | Off by default | 1 day |
+| 5.2 Tradition Markers module (doc 08 §4) | **Delivered 2026-11-13 as the Bible events row** (doc 17, ADR-015): four chronological systems, 52 events, on by default at the owner's request | 1 day |
 | 5.3 Historical Chinese table adapter (Academia Sinica / Liu reconstructions) | Licensing check first | 3 days + rights |
 | 5.4 Regional Gregorian adoption table | Britain 1752, Russia 1918, etc. | 1 day |
 | 5.5 Additional calendars (Coptic/Ethiopic, Islamic tabular, Persian, Egyptian civil, Babylonian P–D tables) | Each with validity table | 1–3 days each |
-| 5.6 Eclipse event rows (NASA canon; recorded eclipses) | Marker datasets with ΔT uncertainty | 3–5 days |
+| 5.6 Eclipse event rows (NASA canon; recorded eclipses) | **Delivered 2026-11-13** (doc 17): 23,962 calculated eclipses 1999 BC – AD 3000 and 35 recorded ones, ΔT ± σ shown | 3–5 days |
 | 5.7 Julian 45 BC–AD 8 irregular leap reconstruction | APPROXIMATE band | 0.5 day |
 
 ## MVP definition

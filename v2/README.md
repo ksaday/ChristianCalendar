@@ -4,7 +4,7 @@ This directory holds the second-generation Sabbath Calendar. The original applic
 repository root is the reference implementation and is never modified (design package:
 `../docs/sabbath-calendar-v2/`, approved 2026-11-11).
 
-Open `index.html` (served over HTTP or from a static host; ES modules need a server for `file://` in some browsers). Phases 1–4 of the roadmap are implemented; see `test/reports/phase4-verification.md`.
+Open `index.html` (served over HTTP or from a static host; ES modules need a server for `file://` in some browsers). Phases 1–4 of the roadmap are implemented; see `test/reports/phase4-verification.md`. Phase 5 adds a Bible-events row (four chronological systems, 52 events, each dating sourced) and calculated and recorded eclipse rows from the NASA Five Millennium Canon; see `../docs/sabbath-calendar-v2/17-PHASE5-EVENTS-AND-ECLIPSES.md`.
 
 ## Contents
 
@@ -14,10 +14,13 @@ v2/
 ├── src/core/                     Chronology Core (BigInt): bigint-math, chronology, invariants
 ├── src/calendars/                adapters: gregorian, julian, hebrew, chinese/ (astronomy + rules), registry
 ├── src/timeline/                 pure timeline model: zoom ladder, O(visible) ticks, cursor, URL state, Sabbath-row rules
+├── src/markers/                  Phase 5: Bible-event systems and datings, Genesis arithmetic, eclipse canon reader, recorded eclipses
+├── data/eclipses/                NASA canon as compact JSON (solar.json, lunar.json) + PROVENANCE.md
 ├── src/ui/                       DOM: app wiring, SVG rows, cursor card, cycle view, go-to dialog, format
 ├── src/styles/v2.css             stylesheet (baseline palette)
 ├── test/                         node:test suites, reference vectors with provenance, browser self-test page
 ├── scripts/check-core.mjs        layer/purity check (imports, forbidden identifiers, literals)
+├── scripts/build-eclipses.mjs    rebuilds data/eclipses/ from the NASA raw files
 ├── scripts/cross-engine.sh       core invariant digest in every JS engine on the machine (Node, jsc, Chrome, Firefox)
 ├── scripts/export-sample.mjs + scripts/independent-recompute.py   Phase 4 independent recomputation (Python, no v2 code)
 └── test/browser/                 invariants.html (cross-engine), ui-smoke.html (T-UI checks), a11y.html (axe-core)

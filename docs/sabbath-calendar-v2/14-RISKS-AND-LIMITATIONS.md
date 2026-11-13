@@ -39,6 +39,14 @@
 7. **No historical year zero.** 1 BC is followed by AD 1; internally year 0 = 1 BC.
 8. **Not a liturgical calendar.** Feasts, fasts, and movable observances are out of scope.
 
+- **Bible-event dates are traditions or estimates.** Each of the four systems is shown with its
+  source; the critical/historical system dates nothing before the monarchy and only brackets the
+  Exodus. Derived figures (for example Seder Olam's Moses, AM 2368) are arithmetic on a cited
+  anchor and a cited interval, and say so. None feeds the Sabbath count (doc 17, ADR-015).
+- **Eclipse days are UT days.** A local date east of Greenwich can be one day later; before about
+  500 BC the ΔT uncertainty (σ ≈ 10 min at 1000 BC, ≈ 1 h at 2000 BC) can move an eclipse across
+  midnight, and the tooltip flags it. Eclipses are listed only for 1999 BC – AD 3000.
+
 ## 3. Known unknowns (recorded, not blocking)
 
 | Topic | Status | Default |
@@ -49,4 +57,10 @@
 | Solar-term timing resolution | Meeus low-accuracy solar series ≈ 0.01° ≈ 15 min; 18 of 4,800 HKO solar-term days (1901–2100) differ by one day, all within 15 min of midnight | Leap-month assignment is flagged APPROXIMATE when a major term is within 30 min of a month-boundary midnight; a higher-order solar series is a Phase 5 option |
 | Safari Temporal support | Not stable as of late 2026 (web search) | Temporal not used at runtime |
 | Firefox / SpiderMonkey | Not available on the development machine; core digest verified in V8 and JavaScriptCore only | `scripts/cross-engine.sh` picks Firefox up automatically when installed; CI could add a Firefox job later |
-| Browser harness in CI | `ui-smoke.html` needs a visible browser (frame-scheduled renders stall under headless virtual time) | Run manually or via a real-time browser runner; axe page runs headless |
+| Browser harness in CI | Resolved 2026-11-13: `npm run check:browser` runs `ui-smoke.html` and `a11y.html` in real-time headless Chrome; the stall came from virtual time | In CI from Phase 5 on |
+- Ussher's paragraph numbers and headings come from the 1658 English text as transcribed on
+  archive.org (OCR); the AM/JP/BC triples were read from it and cross-checked against Wikipedia and
+  the Associates for Biblical Research summary, but not against a printed copy.
+- Sub-modules are fetched without a version query, so a browser with a heuristic HTTP cache can run
+  a stale module for a while after an update (seen on the local Python server; GitHub Pages sends
+  `max-age=600`). Not a correctness risk for the core, which the integrity panel self-tests.

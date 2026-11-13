@@ -146,3 +146,42 @@ body { background: var(--parchment); color: var(--ink); font-family: var(--font-
   .legend { font-size: 0.72rem; gap: 4px 12px; }
 }
 @media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } }
+
+/* ---------- Phase 5: Bible events, eclipses (doc 17) ---------- */
+.rows-list .sub-option { padding-left: 1.4em; font-size: 0.85em; color: var(--ink-soft); }
+.rows-list .sub-option select { font-size: 0.85rem; padding: 1px 4px; margin-left: 4px; }
+.evt { cursor: pointer; }
+.evt-band { fill: var(--sky); opacity: 0.28; }
+.evt-diamond { fill: var(--paper); stroke: var(--midnight); stroke-width: 1.5; }
+.evt-diamond.EXACT { fill: var(--olive); stroke: var(--olive); }
+.evt-diamond.APPROXIMATE { fill: var(--paper); stroke: var(--wine); stroke-dasharray: 2 1.5; }
+.evt-diamond.epoch { fill: var(--paper); stroke: var(--ink-soft); stroke-width: 1.2; }
+.evt-alt-link { stroke: var(--midnight); stroke-width: 1; stroke-dasharray: 3 3; }
+.evt-label { font-size: 11px; fill: var(--ink); }
+.evt-label.epoch { font-size: 10px; fill: var(--ink-soft); font-style: italic; }
+.evt:focus-visible .evt-diamond, .ecl:focus-visible circle { stroke-width: 3; }
+.ecl { cursor: pointer; }
+.ecl.solar circle { fill: var(--gold); stroke: var(--gold-deep); stroke-width: 1.2; }
+.ecl.lunar circle { fill: var(--midnight); stroke: var(--midnight); stroke-width: 1.2; }
+.ecl.partial circle { fill: var(--paper); }
+.ecl.penumbral circle { fill: var(--paper); stroke-dasharray: 1.5 1.5; }
+.ecl.uncertain circle { stroke-dasharray: 2 1; }
+.ecl-label { font-size: 10px; fill: var(--ink-soft); }
+.ecl-label.rec { font-size: 11px; fill: var(--ink); }
+.ecl.rec.disputed circle, .ecl.rec.interpretation circle { fill: var(--paper); }
+.ecl.rec.interpretation circle { stroke-dasharray: 2 1.5; }
+.ecl-q { font-size: 8px; font-weight: 700; fill: var(--ink); pointer-events: none; }
+.cert.INTERPRETATION { fill: var(--midnight); } .cert-box.INTERPRETATION { stroke: var(--midnight); stroke-dasharray: 3 2; }
+.badge.INTERPRETATION { color: var(--midnight); border-color: var(--midnight); border-style: dashed; background: #E9EEF7; }
+.ecl-key { display: inline-block; width: 10px; height: 10px; border-radius: 50%; vertical-align: middle; margin-right: 2px; }
+.ecl-key.solar { background: var(--gold); border: 1px solid var(--gold-deep); } .ecl-key.lunar { background: var(--midnight); }
+.cursor-card h3 { font-family: var(--font-display); font-weight: 400; font-size: 1.05rem; color: var(--midnight); margin: 0.9rem 0 0.25rem; border-top: 1px solid var(--line); padding-top: 0.6rem; }
+.evt-item { margin: 0.3rem 0 0.5rem; } .evt-item p { margin: 0.1rem 0; }
+.evt-systems { list-style: none; padding: 0; margin: 0.25rem 0 0; font-size: 0.85rem; }
+.evt-systems .sys { display: inline-block; min-width: 6.5em; color: var(--ink-soft); }
+.evt-nav { display: flex; gap: 6px; flex-wrap: wrap; margin: 0.4rem 0; }
+.evt-nav .btn { font-size: 0.8rem; }
+.ecl-item { margin: 0.2rem 0 0.4rem; } .rec-note { font-size: 0.85rem; color: var(--midnight); }
+.goto-hint, .goto-note { font-size: 0.85rem; color: var(--ink-soft); } .goto-note { color: var(--midnight); }
+.sr-only-svg { fill: transparent; font-size: 1px; }
+.evt-labels text { cursor: pointer; paint-order: stroke; stroke: var(--paper); stroke-width: 3px; stroke-linejoin: round; }

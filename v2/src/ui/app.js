@@ -13,6 +13,7 @@ import { renderCursorCard } from './cursor-card.js';
 import { renderCycleView } from './cycle-view.js';
 import { setupLookup } from './lookup.js';
 import { fmtInt } from './format.js';
+import { DEFAULT_SYSTEM, SYSTEMS, getSystem, eventsAround, resolveDating, parseCanon, eclipsesOn, describeEclipse, recordedWithCanon, RECORDED, CANON_CREDIT } from '../markers/index.js';
 
 const $ = (id) => document.getElementById(id);
 
@@ -26,29 +27,73 @@ const state = {
   cursorJdn: todayJdn(),
   level: 'week',
   era: 'BC/AD',
-  rows: { julian: true, gregorian: true, hebrew: !narrow, chinese: !narrow, markers: true },
+  rows: { julian: true, gregorian: true, hebrew: !narrow, chinese: !narrow, events: true, eclipses: !narrow, recorded: true, markers: true },
+  eventSystem: DEFAULT_SYSTEM,
+  canon: { status: 'idle', solar: null, lunar: null, error: null },   // NASA canon, fetched lazily (doc 17 §4.1)
+  recorded: RECORDED,
   todayJdn: todayJdn(),
   describe: null,
 };
 
 const fromHash = parse(location.hash);
 if (fromHash) { state.cursorJdn = fromHash.cursorJdn; state.level = fromHash.level; }
-try { const saved = JSON.parse(localStorage.getItem('sabbath-v2-prefs') || 'null'); if (saved) { Object.assign(state.rows, saved.rows || {}); if (saved.era) state.era = saved.era; } } catch { /* ignore */ }
+try {
+  const saved = JSON.parse(localStorage.getItem('sabbath-v2-prefs') || 'null');
+  if (saved) {
+    Object.assign(state.rows, saved.rows || {});
+    if (saved.era) state.era = saved.era;
+    if (saved.eventSystem && SYSTEMS.some(s => s.id === saved.eventSystem)) state.eventSystem = saved.eventSystem;
+  }
+} catch { /* ignore */ }
+
+/* ---------- eclipse canon: loaded once, only when a row needs it ---------- */
+function ensureCanon() {
+  if (state.canon.status !== 'idle' || !(state.rows.eclipses || state.rows.recorded)) return;
+  state.canon.status = 'loading';
+  const url = (k) => new URL(`../../data/eclipses/${k}.json?v=0.5.0`, import.meta.url);
+  Promise.all(['solar', 'lunar'].map(k => fetch(url(k)).then(r => { if (!r.ok) throw new Error(`${k}.json: HTTP ${r.status}`); return r.json(); }).then(parseCanon)))
+    .then(([solar, lunar]) => {
+      state.canon = { status: 'ready', solar, lunar, error: null };
+      const { entries, missing } = recordedWithCanon({ solar, lunar });
+      state.recorded = entries;
+      console.assert(missing.length === 0, 'recorded eclipses without a canon match', missing);
+    })
+    .catch((e) => { state.canon = { status: 'error', solar: null, lunar: null, error: e.message }; })
+    .finally(scheduleRender);
+}
+
+/** Phase 5 data for the cursor card: eclipses of the day and Bible events around the cursor. */
+function phase5Extra() {
+  const sys = getSystem(state.eventSystem);
+  const c = state.canon;
+  const eclipses = c.status === 'ready'
+    ? [...eclipsesOn(c.solar, state.cursorJdn), ...eclipsesOn(c.lunar, state.cursorJdn)].map(e => ({ e, d: describeEclipse(e), recorded: state.recorded.find(r => r.canon && r.canon.jdn === e.jdn) || null }))
+    : [];
+  return {
+    systemShort: sys.short,
+    events: eventsAround(sys.id, state.cursorJdn, state.era),
+    allSystems: (event) => SYSTEMS.map(s => ({ short: s.short, position: resolveDating(s.id, event.datings[s.id], state.era), reason: event.datings[s.id].reason })),
+    eclipses, canonStatus: c.status, canonError: c.error, credit: CANON_CREDIT,
+  };
+}
 
 const timelineEl = $('timeline'), svg = $('rows');
 let raf = 0;
 
 function render() {
   raf = 0;
+  const t0 = performance.now();
+  ensureCanon();
   state.describe = describeCursor(state.cursorJdn, { era: state.era });
   const width = Math.max(320, timelineEl.clientWidth || 1000);
   const vp = viewport(state.cursorJdn, state.level, width);
   renderRows(svg, state, vp);
-  renderCursorCard($('cursorCard'), state.describe);
+  renderCursorCard($('cursorCard'), state.describe, phase5Extra());
   renderCycleView($('cycleView'), state.describe, { era: state.era });
   $('zoomLabel').textContent = level(state.level).label;
   const hash = serialize({ cursorJdn: state.cursorJdn, level: state.level });
   if (location.hash !== hash) history.replaceState(null, '', hash);
+  svg.dataset.renderMs = (performance.now() - t0).toFixed(1);   // read by the smoke harness (T-UI-03)
   document.title = `${state.describe.day.isSabbath ? 'Sabbath #' + fmtInt(state.describe.day.sabbathIndex) : 'Cycle #' + fmtInt(state.describe.day.cycle)} — The Sabbath Calendar`;
 }
 function scheduleRender() {
@@ -60,7 +105,7 @@ function scheduleRender() {
 
 function setCursor(jdn) { state.cursorJdn = jdn; scheduleRender(); }
 function setLevel(l) { if (isLevel(l) && l !== state.level) { state.level = l; scheduleRender(); } }
-function savePrefs() { try { localStorage.setItem('sabbath-v2-prefs', JSON.stringify({ rows: state.rows, era: state.era })); } catch { /* ignore */ } }
+function savePrefs() { try { localStorage.setItem('sabbath-v2-prefs', JSON.stringify({ rows: state.rows, era: state.era, eventSystem: state.eventSystem })); } catch { /* ignore */ } }
 
 /* ---------- controls ---------- */
 $('todayBtn').addEventListener('click', () => setCursor(todayJdn()));
@@ -73,6 +118,11 @@ for (const cb of document.querySelectorAll('.rows-list input[type=checkbox]')) {
   cb.checked = state.rows[cb.dataset.row];
   cb.addEventListener('change', () => { state.rows[cb.dataset.row] = cb.checked; savePrefs(); scheduleRender(); });
 }
+const sysSel = $('eventSystem');
+sysSel.innerHTML = SYSTEMS.map(s => `<option value="${s.id}">${s.short}</option>`).join('');
+sysSel.value = state.eventSystem;
+sysSel.title = getSystem(state.eventSystem).name;
+sysSel.addEventListener('change', (e) => { state.eventSystem = e.target.value; sysSel.title = getSystem(state.eventSystem).name; savePrefs(); scheduleRender(); });
 const lookup = setupLookup($('gotoDialog'), { getEra: () => state.era, onGo: (jdn) => setCursor(jdn) });
 $('gotoBtn').addEventListener('click', () => lookup.open());
 

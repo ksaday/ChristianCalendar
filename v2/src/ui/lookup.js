@@ -12,6 +12,7 @@ import { isUnsupported } from '../calendars/adapter.js';
 import { astronomicalYear, MONTH_NAMES } from '../calendars/civil-common.js';
 import { MONTH_NAMES as HEB_MONTHS, isLeapYear as hebLeap } from '../calendars/hebrew.js';
 import { describeCursor } from '../timeline/cursor.js';
+import { SYSTEMS, EVENTS, GROUPS, getEvent, resolveDating } from '../markers/index.js';
 import { fmtInt, sabbathLabel } from './format.js';
 
 const esc = (s) => String(s).replace(/[&<>"]/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]));
@@ -20,6 +21,7 @@ const MODES = [
   { id: 'sabbath', label: 'Sabbath number' },
   { id: 'jdn', label: 'Julian Day Number' },
   ...adapters.map(a => ({ id: a.id, label: `${a.name} date` })),
+  { id: 'event', label: 'Bible event' },
 ];
 
 function fieldsHtml(mode, era) {
@@ -43,13 +45,26 @@ function fieldsHtml(mode, era) {
       <label><input type="checkbox" name="leap"> leap month (閏)</label>
       <label>Day <input name="day" inputmode="numeric" maxlength="2" value="1"></label>`;
   }
+  if (mode === 'event') {
+    const groups = Object.entries(GROUPS).map(([gid, gname]) => `<optgroup label="${esc(gname)}">${EVENTS.filter(e => e.group === gid).map(e => `<option value="${e.id}">${esc(e.label)}</option>`).join('')}</optgroup>`).join('');
+    return `<label>Chronology <select name="system" autofocus>${SYSTEMS.map(s => `<option value="${s.id}">${esc(s.short)}</option>`).join('')}</select></label>
+      <label>Event <select name="event">${groups}</select></label>
+      <p class="goto-hint">Dates are traditions or estimates with their sources; the cursor goes to the first day of the system's year (or to the claimed day).</p>`;
+  }
   return '';
 }
 
-/** Resolve the form to a JDN or throw an Error with a user-facing message. */
+/** Resolve the form to a JDN (or {jdn, note}) or throw an Error with a user-facing message. */
 function resolve(mode, fd) {
   if (mode === 'sabbath') return sabbathJdn(toBigInt(fd.get('n') || '', 'Sabbath number'));
   if (mode === 'jdn') return toBigInt(fd.get('jdn') || '', 'JDN');
+  if (mode === 'event') {
+    const ev = getEvent(fd.get('event')), sysId = fd.get('system');
+    const pos = resolveDating(sysId, ev.datings[sysId]);
+    const sys = SYSTEMS.find(s => s.id === sysId);
+    if (!pos) throw new Error(`${ev.label}: no date in the ${sys.short} reckoning — ${ev.datings[sysId].reason}`);
+    return { jdn: pos.jump, note: `${ev.label} (${ev.ref}) — ${pos.figure} [${sys.short}] · ${pos.basis}` };
+  }
   const a = adapters.find(x => x.id === mode);
   let date;
   if (mode === 'gregorian' || mode === 'julian') {
@@ -66,12 +81,12 @@ function resolve(mode, fd) {
   return j;
 }
 
-function previewHtml(jdn, era) {
+function previewHtml(jdn, era, note) {
   const d = describeCursor(jdn, { era });
   const day = describeDay(jdn);
   const cal = d.calendars.map(c => `${esc(c.name)}: ${c.label === null ? '—' : esc(c.label)} <span class="badge ${c.support.certainty}">${c.support.certainty.toLowerCase()}</span>`).join(' · ');
   const sab = day.isSabbath ? sabbathLabel(day.sabbathIndex) : `${day.dayName}, cycle #${fmtInt(day.cycle)} (day ${day.positionInCycle} of 7)`;
-  return `<strong>${esc(sab)}</strong> · JDN ${esc(fmtInt(jdn))}<br>${cal}`;
+  return `${note ? `<span class="goto-note">${esc(note)}</span><br>` : ''}<strong>${esc(sab)}</strong> · JDN ${esc(fmtInt(jdn))}<br>${cal}`;
 }
 
 /**
@@ -88,8 +103,10 @@ export function setupLookup(dialog, api) {
   const renderFields = () => { fields.innerHTML = fieldsHtml(mode, api.getEra()); update(); fields.querySelector('input,select')?.focus(); };
   const update = () => {
     try {
-      resolved = resolve(mode, new FormData(form));
-      preview.className = 'goto-preview'; preview.innerHTML = previewHtml(resolved, api.getEra()); goBtn.disabled = false;
+      const res = resolve(mode, new FormData(form));
+      const note = typeof res === 'bigint' ? '' : res.note;
+      resolved = typeof res === 'bigint' ? res : res.jdn;
+      preview.className = 'goto-preview'; preview.innerHTML = previewHtml(resolved, api.getEra(), note); goBtn.disabled = false;
     } catch (e) {
       resolved = null; preview.className = 'goto-preview err';
       preview.textContent = (e instanceof ChronologyInputError || e instanceof Error) ? e.message : String(e); goBtn.disabled = true;

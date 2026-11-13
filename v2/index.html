@@ -4,8 +4,8 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>The Sabbath Calendar — one unbroken seven-day cycle</title>
-<meta name="description" content="A mathematically exact, continuously numbered Sabbath calendar anchored at Saturday 4 April AD 33 (JDN 1,733,205), synchronized with the Julian, Gregorian, Hebrew and Chinese calendars.">
-<link rel="stylesheet" href="src/styles/v2.css?v=0.4.0">
+<meta name="description" content="A mathematically exact, continuously numbered Sabbath calendar anchored at Saturday 4 April AD 33 (JDN 1,733,205), synchronized with the Julian, Gregorian, Hebrew and Chinese calendars, with Bible-event traditions and NASA eclipse rows.">
+<link rel="stylesheet" href="src/styles/v2.css?v=0.5.0">
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns=%27http://www.w3.org/2000/svg%27 viewBox=%270 0 32 32%27%3E%3Crect width=%2732%27 height=%2732%27 rx=%276%27 fill=%27%231B2240%27/%3E%3Ctext x=%2716%27 y=%2722%27 font-size=%2718%27 text-anchor=%27middle%27 fill=%27%23B0842C%27 font-family=%27serif%27%3E7%3C/text%3E%3C/svg%3E">
 </head>
 <body>
@@ -35,6 +35,10 @@
       <label><input type="checkbox" data-row="gregorian" checked> Gregorian</label>
       <label><input type="checkbox" data-row="hebrew" checked> Hebrew</label>
       <label><input type="checkbox" data-row="chinese" checked> Chinese</label>
+      <label><input type="checkbox" data-row="events" checked> Bible events</label>
+      <label class="sub-option">Chronology <select id="eventSystem" class="btn" aria-label="Chronological system for Bible events"></select></label>
+      <label><input type="checkbox" data-row="eclipses" checked> Eclipses · calculated</label>
+      <label><input type="checkbox" data-row="recorded" checked> Eclipses · recorded</label>
       <label><input type="checkbox" data-row="markers" checked> Markers</label>
     </div>
   </details>
@@ -57,6 +61,8 @@
       <li><span class="swatch swatch-wine"></span> milestone (every 1,000th)</li>
       <li><span class="star-key">✦</span> Anniversary Sabbath</li>
       <li><span class="swatch swatch-olive"></span> today</li>
+      <li><span class="badge INTERPRETATION">tradition</span> ◇ Bible event: a tradition or estimate; the bar is the year it names</li>
+      <li><span class="ecl-key solar"></span> solar eclipse &nbsp;<span class="ecl-key lunar"></span> lunar eclipse (filled = total/annular; ? = disputed)</li>
     </ul>
   </section>
 
@@ -83,11 +89,12 @@
   <div class="footer-inner">
     <p class="verse">&ldquo;There remaineth therefore a rest to the people of God.&rdquo;<span class="verse-ref">&mdash; Hebrews&nbsp;4:9</span></p>
     <p class="method">Method: continuous Julian Day Number counting in arbitrary-precision integers &mdash; Sabbath #n = JDN 1,733,205 + 7&times;(n&minus;1). The seven-day week ran unbroken through the 1582 reform. Sabbath numbers before #1 are a mathematical projection of the cycle and make no claim about observance. Calendar labels carry their own certainty: proleptic Gregorian and Julian dates, calculated Hebrew dates before 922&nbsp;CE, and Chinese dates before 1929 are conventions or reconstructions, never asserted as observed dates.</p>
+    <p class="method">Bible-event dates are traditions or estimates (Ussher, Seder Olam, early-date conservative, critical/historical), each with its source; they are projected onto the unbroken cycle and never feed it. Eclipse Predictions by Fred Espenak and Jean Meeus (NASA's GSFC): <a href="https://eclipse.gsfc.nasa.gov/SEcat5/SEcatalog.html">Five Millennium Catalog of Solar Eclipses</a> and <a href="https://eclipse.gsfc.nasa.gov/LEcat5/LEcatalog.html">of Lunar Eclipses</a>; days are UT civil days and the tooltip states ΔT with its uncertainty. Design note: <code>docs/sabbath-calendar-v2/17-PHASE5-EVENTS-AND-ECLIPSES.md</code>.</p>
     <p class="method">Reference application: <a href="../index.html">The Christian Calendar</a> (unchanged). Design package: <code>docs/sabbath-calendar-v2/</code>.</p>
     <p id="selfCheck" class="selfcheck"></p>
   </div>
 </footer>
 
-<script type="module" src="src/ui/app.js?v=0.4.0"></script>
+<script type="module" src="src/ui/app.js?v=0.5.0"></script>
 </body>
 </html>

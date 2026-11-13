@@ -28,3 +28,6 @@ jobs:
         working-directory: v2
         run: npm test
         env: { TZ: 'Pacific/Pago_Pago' }
+      - name: Browser checks — UI smoke harness and axe-core in headless Chrome (doc 12 §7.3)
+        working-directory: v2
+        run: npm run check:browser

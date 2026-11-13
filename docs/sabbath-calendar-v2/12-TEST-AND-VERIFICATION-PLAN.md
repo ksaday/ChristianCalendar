@@ -132,6 +132,19 @@ Plus a browser-level smoke suite for the UI and an integrity panel at runtime.
 
 Full report: `v2/test/reports/phase4-verification.md`. Highlights: invariant digest identical in Node 24, JavaScriptCore, Google Chrome 157 headless and the desktop app's Chromium (`v2/scripts/cross-engine.sh`; Firefox not installed); suite green under three timezones; independent Python recomputation of 60 sampled indices (`v2/scripts/independent-recompute.py`) agrees on every field; Hebcal converter agrees on 60 independent dates; UI smoke harness `v2/test/browser/ui-smoke.html` passed 12/12 in a visible browser; axe-core 0 violations.
 
+### 7.3 Phase 5 verification record (2026-11-13)
+
+New tests T-EVT-01…06 (`test/markers.test.js`), T-ECL-01…05 (`test/eclipses.test.js`) and
+T-UI-15…18 (`test/browser/ui-smoke.html`); definitions in doc 17 §6. Node suite 94/94; smoke
+harness 16/16 in a visible pane, slowest render 5 ms; axe-core 0 violations. The harness now waits
+for each re-render instead of fixed sleeps, and the app records its own render time on the SVG
+(`data-render-ms`) so T-UI-03 measures rendering, not frame scheduling.
+
+`npm run check:browser` (`scripts/browser-checks.mjs`) runs both browser pages in headless
+Chrome in real time over the DevTools protocol (Node's built-in WebSocket, no new dependency),
+with its own no-store static server. It replaces the Phase 4 limitation that the smoke harness
+needed a visible browser (the earlier stall came from `--virtual-time-budget`), and CI now runs it.
+
 ## 8. Traceability matrix (requirement → tests)
 
 | Requirement | Tests |
@@ -161,7 +174,8 @@ Full report: `v2/test/reports/phase4-verification.md`. Highlights: invariant dig
 | REQ-CAL-10 | §5 vectors |
 | REQ-UI-01…16 | T-UI-01…08 |
 | REQ-VER-01…06 | this document |
-| REQ-GEN-01 | CI grep: no numeric constant other than 1733205 and 7 in `core/`; no "creation" identifier |
+| REQ-GEN-01 | CI grep: no numeric constant other than 1733205 and 7 in `core/`; no "creation" identifier outside `markers/` (`check-core`) |
+| REQ-GEN-02, 03 (Phase 5, doc 17) | T-EVT-01…06, T-UI-15, T-UI-18; eclipses T-ECL-01…05, T-UI-16, T-UI-17 |
 | REQ-NF-05 | T-NF-01: run suite under TZ=UTC, TZ=Pacific/Kiritimati, TZ=Pacific/Pago_Pago |
 
 ## 9. Acceptance gates

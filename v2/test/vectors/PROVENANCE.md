@@ -11,6 +11,9 @@ Every external number used by the test suite is listed here with its source and 
 | `chinese-hko.json` | First day of every lunar month 1901–2100 (2,474, with 73 leap months) and 4,800 solar-term days | Hong Kong Observatory, Gregorian-Lunar Calendar Conversion Tables, text files `T1901e.txt` … `T2100e.txt` from `https://www.hko.gov.hk/en/gts/time/conversion1_text.htm` | 2026-11-11 | Derived data (dates only); Hong Kong time (UTC+8). HKO's own pre-1929 tables appear to mix UTC+8 and Beijing local mean time (see docs 07 §5, 14 §3) |
 | `fixtures/baseline-v1.js` (in `test/fixtures/`) | Verbatim copy of the original application's math | `js/calendar.js` at commit `6229702` | 2026-11-11 | Regression oracle; `Number`-based |
 
+| `../data/eclipses/*.json` (in `data/eclipses/`) | NASA Five Millennium Canon, solar and lunar | see `data/eclipses/PROVENANCE.md` | 2026-11-12 | Used by the app at run time and by `test/eclipses.test.js` |
+| `src/markers/events.js`, `systems.js`, `recorded-eclipses.js` | Bible-event datings and recorded eclipses, each with its citation | Ussher's *Annals* (1658, archive.org text), Jewish Encyclopedia, Wikipedia articles, Bible Hub timeline, Stephenson 1997, and others named per entry | 2026-11-12 | Figures and short factual summaries only; no text reproduced beyond short phrases |
+
 Cross-checks that run only when the engine provides them (skipped, never failed, otherwise):
 `Intl.DateTimeFormat` with the `hebrew` and `chinese` calendars (ICU). ICU is not treated as a
 source of truth; where it disagrees with this implementation, the HKO or Hebcal data decide.
