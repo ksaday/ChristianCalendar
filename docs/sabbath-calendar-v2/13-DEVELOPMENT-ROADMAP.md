@@ -73,10 +73,10 @@ Dependencies: Phases 1, 2a. MVP-critical (Chinese row may show UNSUPPORTED until
 | 5.1 Religious boundary layer (Friday sunset): location input, NOAA solar-position algorithm, labeled "observance window" | Never changes the civil cycle | 3 days |
 | 5.2 Tradition Markers module (doc 08 §4) | **Delivered 2026-11-13 as the Bible events row** (doc 17, ADR-015): four chronological systems, 52 events, on by default at the owner's request | 1 day |
 | 5.3 Historical Chinese table adapter (Academia Sinica / Liu reconstructions) | Licensing check first | 3 days + rights |
-| 5.4 Regional Gregorian adoption table | Britain 1752, Russia 1918, etc. | 1 day |
+| 5.4 Regional Gregorian adoption table | **Delivered 2026-11-13** as the civil-date row (doc 18, ADR-016): 30 regions, England's 25 March year, the Swedish calendar | 1 day |
 | 5.5 Additional calendars (Coptic/Ethiopic, Islamic tabular, Persian, Egyptian civil, Babylonian P–D tables) | Each with validity table | 1–3 days each |
 | 5.6 Eclipse event rows (NASA canon; recorded eclipses) | **Delivered 2026-11-13** (doc 17): 23,962 calculated eclipses 1999 BC – AD 3000 and 35 recorded ones, ΔT ± σ shown | 3–5 days |
-| 5.7 Julian 45 BC–AD 8 irregular leap reconstruction | APPROXIMATE band | 0.5 day |
+| 5.7 Julian 45 BC–AD 8 irregular leap reconstruction | **Delivered 2026-11-13** (doc 18): nine reconstructions, APPROXIMATE, all 18 published checkpoints reproduced | 0.5 day |
 
 ## MVP definition
 

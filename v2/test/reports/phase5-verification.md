@@ -41,3 +41,15 @@ Bible dates on the calendar (design and decisions: doc 17, ADR-015).
   cross-checked against two secondary summaries, not against a printed copy.
 - Bible-event dates are traditions or estimates. The app labels them so and never feeds them
   into the Sabbath count.
+
+## Addendum — civil date by region (5.4) and the early Julian calendar (5.7), 2026-11-13
+
+| Check | Result |
+|---|---|
+| `npm run verify` | check-core OK (24 files), baseline unchanged, 100/100 tests |
+| `npm run check:browser` | ui-smoke 18/18, axe-core 0 violations |
+| Early Julian reconstructions vs the source table | 18/18 values reproduced |
+
+Found and fixed: a render that was pending when the URL hash changed wrote the old cursor back,
+losing the jump; and the reconstruction list kept a "(Roman, …)" suffix when the scholar's name had
+its own parentheses. Design: doc 18; decision: ADR-016.

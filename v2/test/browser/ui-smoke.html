@@ -12,7 +12,7 @@
 </style>
 </head>
 <body>
-<h1>UI smoke tests (T-UI-01 … T-UI-18, zero dependencies)</h1>
+<h1>UI smoke tests (T-UI-01 … T-UI-20, zero dependencies)</h1>
 <p id="status">Running…</p>
 <table id="results"><thead><tr><th>ID</th><th>Check</th><th>Result</th></tr></thead><tbody></tbody></table>
 <iframe id="app" src="../../index.html#j=2461317&z=week" title="application under test"></iframe>
@@ -119,7 +119,7 @@
     record('T-UI-14', 'rows have role=list and ticks role=listitem with labels; cursor card is a live region', rowsAria >= 5 && itemsAria > 0 && $('cursorCard').getAttribute('aria-live') === 'polite', `${rowsAria} rows, ${itemsAria} items`);
 
     // T-UI-12/08: narrow layout collapses Hebrew/Chinese rows by default (checked via the app's own media query logic)
-    record('T-UI-08', 'narrow-viewport defaults (verified separately in a 375 px viewport; here: rows menu has 8 row toggles)', d.querySelectorAll('.rows-list input').length === 8);
+    record('T-UI-08', 'narrow-viewport defaults (verified separately in a 375 px viewport; here: rows menu has 9 row toggles)', d.querySelectorAll('.rows-list input').length === 9);
 
     // T-UI-15: Bible events row — the Exodus band (Ussher, 1491 BC) at week zoom, with the cursor card listing all four systems
     await setHash('#j=1176987&z=week');
@@ -150,6 +150,22 @@
     const evPreviewOk = await waitFor(() => $('gotoPreview').textContent.includes('1491 BC') && $('gotoPreview').textContent.includes('Annals'));
     $('gotoGo').click(); await waitFor(() => w.location.hash.includes('j=1176836'));
     record('T-UI-18', 'Go to… Bible event: Ussher/Exodus previews "1491 BC" with its basis and jumps to JDN 1,176,836 (1 Jan 1491 BC Julian)', evPreviewOk && w.location.hash.includes('j=1176836'), w.location.hash);
+
+    // T-UI-19: civil row in Great Britain at day zoom: 2 September 1752 is followed by 14 September; the switch marker is drawn
+    const regionSel = $('civilRegion'); regionSel.value = 'britain'; regionSel.dispatchEvent(new Event('change', { bubbles: true }));
+    await setHash('#j=2361222&z=day');
+    const civilLabels = [...d.querySelectorAll('#rows .row-civil .tick-label')].map(t => t.getAttribute('aria-label') || '');
+    const i2 = civilLabels.findIndex(l => l.startsWith('2 September 1752'));
+    const switchMarker = [...d.querySelectorAll('#rows .marker')].some(m => (m.getAttribute('aria-label') || '').startsWith('Britain: Gregorian'));
+    record('T-UI-19', 'civil row (Britain) at day zoom: 2 September 1752 (Julian) is followed by 14 September 1752 (Gregorian); switch marker drawn',
+      i2 >= 0 && (civilLabels[i2 + 1] || '').startsWith('14 September 1752') && switchMarker && cardText().includes('Civil · Britain'), civilLabels.slice(Math.max(0, i2 - 1), i2 + 3).join(' | '));
+    regionSel.value = 'rome'; regionSel.dispatchEvent(new Event('change', { bubbles: true }));
+
+    // T-UI-20: in 12 BC the cursor card lists all nine early-Julian reconstructions and the civil row is APPROXIMATE
+    await setHash('#j=1717133&z=week');
+    const reconItems = [...d.querySelectorAll('#cursorCard .evt-systems li')].filter(li => /\((\d{4}|after 1610)\)/.test(li.textContent)).length;
+    const civilBadge = d.querySelector('#rows .row-civil .cert')?.textContent;
+    record('T-UI-20', 'in 12 BC the cursor card lists the nine reconstructions and the civil row is approximate', reconItems === 9 && civilBadge === 'approximate', `${reconItems} reconstructions, badge ${civilBadge}`);
   } catch (e) {
     record('harness', 'unexpected error', false, String(e && e.stack || e));
   }

@@ -67,6 +67,13 @@ async function run(path, expression, timeoutMs = 120000) {
   return null;
 }
 
+// Debug mode: BROWSER_EVAL_PATH=/v2/index.html#j=… BROWSER_EVAL='expr returning a truthy value' prints that value and exits.
+if (process.env.BROWSER_EVAL_PATH) {
+  const v = await run(process.env.BROWSER_EVAL_PATH, process.env.BROWSER_EVAL || 'document.title', 30000);
+  console.log(typeof v === 'string' ? v : JSON.stringify(v, null, 2));
+  ws.close(); cleanup(); process.exit(v ? 0 : 1);
+}
+
 let failed = false;
 const smoke = await run('/v2/test/browser/ui-smoke.html', `window.__smoke ? window.__smoke.map(r => ({ id: r.id, ok: r.ok, check: r.check, detail: r.detail })) : null`);
 if (!smoke) { console.log('ui-smoke: TIMEOUT'); failed = true; }

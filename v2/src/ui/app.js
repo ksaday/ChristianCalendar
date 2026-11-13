@@ -13,6 +13,7 @@ import { renderCursorCard } from './cursor-card.js';
 import { renderCycleView } from './cycle-view.js';
 import { setupLookup } from './lookup.js';
 import { fmtInt } from './format.js';
+import { civilAdapter, REGIONS, RECONSTRUCTIONS, DEFAULT_REGION, DEFAULT_RECONSTRUCTION, romanLabels } from '../calendars/civil.js';
 import { DEFAULT_SYSTEM, SYSTEMS, getSystem, eventsAround, resolveDating, parseCanon, eclipsesOn, describeEclipse, recordedWithCanon, RECORDED, CANON_CREDIT } from '../markers/index.js';
 
 const $ = (id) => document.getElementById(id);
@@ -27,7 +28,10 @@ const state = {
   cursorJdn: todayJdn(),
   level: 'week',
   era: 'BC/AD',
-  rows: { julian: true, gregorian: true, hebrew: !narrow, chinese: !narrow, events: true, eclipses: !narrow, recorded: true, markers: true },
+  rows: { julian: true, gregorian: true, hebrew: !narrow, chinese: !narrow, civil: true, events: true, eclipses: !narrow, recorded: true, markers: true },
+  region: DEFAULT_REGION,
+  recon: DEFAULT_RECONSTRUCTION,
+  civil: null,                                                       // civil-date adapter for (region, recon), doc 18
   eventSystem: DEFAULT_SYSTEM,
   canon: { status: 'idle', solar: null, lunar: null, error: null },   // NASA canon, fetched lazily (doc 17 §4.1)
   recorded: RECORDED,
@@ -43,14 +47,17 @@ try {
     Object.assign(state.rows, saved.rows || {});
     if (saved.era) state.era = saved.era;
     if (saved.eventSystem && SYSTEMS.some(s => s.id === saved.eventSystem)) state.eventSystem = saved.eventSystem;
+    if (saved.region && REGIONS.some(r => r.id === saved.region)) state.region = saved.region;
+    if (saved.recon && RECONSTRUCTIONS.some(r => r.id === saved.recon)) state.recon = saved.recon;
   }
 } catch { /* ignore */ }
+state.civil = civilAdapter(state.region, state.recon);
 
 /* ---------- eclipse canon: loaded once, only when a row needs it ---------- */
 function ensureCanon() {
   if (state.canon.status !== 'idle' || !(state.rows.eclipses || state.rows.recorded)) return;
   state.canon.status = 'loading';
-  const url = (k) => new URL(`../../data/eclipses/${k}.json?v=0.5.0`, import.meta.url);
+  const url = (k) => new URL(`../../data/eclipses/${k}.json?v=0.6.0`, import.meta.url);
   Promise.all(['solar', 'lunar'].map(k => fetch(url(k)).then(r => { if (!r.ok) throw new Error(`${k}.json: HTTP ${r.status}`); return r.json(); }).then(parseCanon)))
     .then(([solar, lunar]) => {
       state.canon = { status: 'ready', solar, lunar, error: null };
@@ -74,17 +81,19 @@ function phase5Extra() {
     events: eventsAround(sys.id, state.cursorJdn, state.era),
     allSystems: (event) => SYSTEMS.map(s => ({ short: s.short, position: resolveDating(s.id, event.datings[s.id], state.era), reason: event.datings[s.id].reason })),
     eclipses, canonStatus: c.status, canonError: c.error, credit: CANON_CREDIT,
+    roman: romanLabels(state.cursorJdn, state.era), reconId: state.recon,
   };
 }
 
 const timelineEl = $('timeline'), svg = $('rows');
 let raf = 0;
+let lastHash = null;   // the hash this app last wrote (see render)
 
 function render() {
   raf = 0;
   const t0 = performance.now();
   ensureCanon();
-  state.describe = describeCursor(state.cursorJdn, { era: state.era });
+  state.describe = describeCursor(state.cursorJdn, { era: state.era, extraAdapters: [state.civil] });
   const width = Math.max(320, timelineEl.clientWidth || 1000);
   const vp = viewport(state.cursorJdn, state.level, width);
   renderRows(svg, state, vp);
@@ -92,7 +101,10 @@ function render() {
   renderCycleView($('cycleView'), state.describe, { era: state.era });
   $('zoomLabel').textContent = level(state.level).label;
   const hash = serialize({ cursorJdn: state.cursorJdn, level: state.level });
-  if (location.hash !== hash) history.replaceState(null, '', hash);
+  // Write the hash only if nobody else changed it since we last wrote it: a hash typed, pasted or set by a
+  // link while this render was pending belongs to the pending hashchange, which renders it next.
+  if (location.hash !== hash && (lastHash === null || location.hash === lastHash || location.hash === '')) { history.replaceState(null, '', hash); lastHash = hash; }
+  else if (location.hash === hash) lastHash = hash;
   svg.dataset.renderMs = (performance.now() - t0).toFixed(1);   // read by the smoke harness (T-UI-03)
   document.title = `${state.describe.day.isSabbath ? 'Sabbath #' + fmtInt(state.describe.day.sabbathIndex) : 'Cycle #' + fmtInt(state.describe.day.cycle)} — The Sabbath Calendar`;
 }
@@ -105,7 +117,7 @@ function scheduleRender() {
 
 function setCursor(jdn) { state.cursorJdn = jdn; scheduleRender(); }
 function setLevel(l) { if (isLevel(l) && l !== state.level) { state.level = l; scheduleRender(); } }
-function savePrefs() { try { localStorage.setItem('sabbath-v2-prefs', JSON.stringify({ rows: state.rows, era: state.era, eventSystem: state.eventSystem })); } catch { /* ignore */ } }
+function savePrefs() { try { localStorage.setItem('sabbath-v2-prefs', JSON.stringify({ rows: state.rows, era: state.era, eventSystem: state.eventSystem, region: state.region, recon: state.recon })); } catch { /* ignore */ } }
 
 /* ---------- controls ---------- */
 $('todayBtn').addEventListener('click', () => setCursor(todayJdn()));
@@ -123,7 +135,15 @@ sysSel.innerHTML = SYSTEMS.map(s => `<option value="${s.id}">${s.short}</option>
 sysSel.value = state.eventSystem;
 sysSel.title = getSystem(state.eventSystem).name;
 sysSel.addEventListener('change', (e) => { state.eventSystem = e.target.value; sysSel.title = getSystem(state.eventSystem).name; savePrefs(); scheduleRender(); });
-const lookup = setupLookup($('gotoDialog'), { getEra: () => state.era, onGo: (jdn) => setCursor(jdn) });
+const regionSel = $('civilRegion'), reconSel = $('civilRecon');
+regionSel.innerHTML = REGIONS.map(r => `<option value="${r.id}">${r.short}</option>`).join('');
+reconSel.innerHTML = RECONSTRUCTIONS.map(r => `<option value="${r.id}">${r.name}</option>`).join('');
+regionSel.value = state.region; reconSel.value = state.recon;
+const setCivil = () => { state.civil = civilAdapter(state.region, state.recon); regionSel.title = state.civil.region.name; savePrefs(); scheduleRender(); };
+regionSel.addEventListener('change', (e) => { state.region = e.target.value; setCivil(); });
+reconSel.addEventListener('change', (e) => { state.recon = e.target.value; setCivil(); });
+regionSel.title = state.civil.region.name;
+const lookup = setupLookup($('gotoDialog'), { getEra: () => state.era, getCivil: () => state.civil, onGo: (jdn) => setCursor(jdn) });
 $('gotoBtn').addEventListener('click', () => lookup.open());
 
 /* click a tick / jump button anywhere */
@@ -195,7 +215,7 @@ timelineEl.addEventListener('wheel', (e) => {
   if (days !== 0n) setCursor(state.cursorJdn + days);
 }, { passive: false });
 
-window.addEventListener('hashchange', () => { const h = parse(location.hash); if (h) { state.cursorJdn = h.cursorJdn; state.level = h.level; scheduleRender(); } });
+window.addEventListener('hashchange', () => { const h = parse(location.hash); lastHash = location.hash; if (h) { state.cursorJdn = h.cursorJdn; state.level = h.level; scheduleRender(); } });
 window.addEventListener('resize', scheduleRender);
 
 /* ---------- integrity panel (COMPAT-15, T-VER-01) ---------- */

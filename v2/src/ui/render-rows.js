@@ -55,7 +55,10 @@ const diamond = (x, y, r, cls) => el('path', { class: cls, d: `M${x} ${y - r} L$
  */
 export function renderRows(svg, state, vp) {
   const rowSpecs = [{ id: 'sabbath', name: 'Sabbath', sub: '7-day cycle' }];
-  for (const a of adapters) if (state.rows[a.id]) rowSpecs.push({ id: a.id, name: a.name, sub: a.variant.split(',')[0], adapter: a });
+  for (const a of adapters) {
+    if (state.rows[a.id]) rowSpecs.push({ id: a.id, name: a.name, sub: a.variant.split(',')[0], adapter: a });
+    if (a.id === 'gregorian' && state.rows.civil && state.civil) rowSpecs.push({ id: 'civil', name: 'Civil date', sub: state.civil.region.short, adapter: state.civil });
+  }
   const system = getSystem(state.eventSystem);
   if (state.rows.events) rowSpecs.push({ id: 'events', name: 'Bible events', sub: `${system.short} (tradition)` });
   if (state.rows.eclipses) rowSpecs.push({ id: 'eclipses', name: 'Eclipses', sub: 'calculated (NASA canon)' });
@@ -103,7 +106,14 @@ export function renderRows(svg, state, vp) {
       g.appendChild(el('line', { class: 'row-line collapsed', x1: 0, x2: width, y1: yLine, y2: yLine }));
       const today = { id: 'today', jdn: state.todayJdn, label: 'Today', detail: 'from this device’s clock', certainty: 'EXACT', today: true };
       let lastEnd = -Infinity;
-      for (const m of markerTicks(vp, [today])) {
+      const extra = [today];
+      if (state.civil && state.civil.region.id !== 'rome') {
+        const r = state.civil.region, j = r.switchJdn;
+        const before = state.civil.fromJdn(j - 1n);
+        extra.push({ id: 'region-switch', jdn: j, label: `${r.short}: Gregorian`, certainty: 'EXACT',
+          detail: `${before.unsupported ? `${r.name} used ${r.prev}` : `${describeDay(j - 1n).dayName} ${state.civil.format(before)}`} → ${describeDay(j).dayName} ${state.civil.format(state.civil.fromJdn(j))}` });
+      }
+      for (const m of markerTicks(vp, extra)) {
         const x = vp.x(m.jdn) + vp.pxPerDay / 2;
         const mk = el('g', { class: `marker ${m.today ? 'today' : ''}`, role: 'listitem', 'data-jdn': m.jdn.toString(), tabindex: 0, 'aria-label': `${m.label}: ${m.detail}` });
         mk.appendChild(el('path', { d: `M${x} ${yLine - 8} L${x + 7} ${yLine} L${x} ${yLine + 8} L${x - 7} ${yLine} Z` }));

@@ -185,3 +185,5 @@ body { background: var(--parchment); color: var(--ink); font-family: var(--font-
 .goto-hint, .goto-note { font-size: 0.85rem; color: var(--ink-soft); } .goto-note { color: var(--midnight); }
 .sr-only-svg { fill: transparent; font-size: 1px; }
 .evt-labels text { cursor: pointer; paint-order: stroke; stroke: var(--paper); stroke-width: 3px; stroke-linejoin: round; }
+.evt-systems li.current { font-weight: 600; }
+.row-band.civil { fill: #F3F6EF; }

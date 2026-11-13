@@ -14,6 +14,8 @@ Every external number used by the test suite is listed here with its source and 
 | `../data/eclipses/*.json` (in `data/eclipses/`) | NASA Five Millennium Canon, solar and lunar | see `data/eclipses/PROVENANCE.md` | 2026-11-12 | Used by the app at run time and by `test/eclipses.test.js` |
 | `src/markers/events.js`, `systems.js`, `recorded-eclipses.js` | Bible-event datings and recorded eclipses, each with its citation | Ussher's *Annals* (1658, archive.org text), Jewish Encyclopedia, Wikipedia articles, Bible Hub timeline, Stephenson 1997, and others named per entry | 2026-11-12 | Figures and short factual summaries only; no text reproduced beyond short phrases |
 
+| `src/calendars/civil.js` (data) and `test/civil.test.js` (expected values) | Nine early-Julian reconstructions with their published "Roman 1 Jan 45 BC" and "first aligned day"; 30 regional switch dates; England's legal year; the Swedish calendar | Wikipedia "Julian calendar", "List of adoption dates of the Gregorian calendar by country", "Adoption of the Gregorian calendar", "Old Style and New Style dates", "Swedish calendar" | 2026-11-13 | Dates only |
+
 Cross-checks that run only when the engine provides them (skipped, never failed, otherwise):
 `Intl.DateTimeFormat` with the `hebrew` and `chinese` calendars (ICU). ICU is not treated as a
 source of truth; where it disagrees with this implementation, the HKO or Hebcal data decide.

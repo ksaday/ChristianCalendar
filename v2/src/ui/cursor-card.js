@@ -28,6 +28,13 @@ function eventsHtml(x) {
   return html;
 }
 
+function romanHtml(x) {
+  if (!x || !x.roman) return '';
+  return `<h3>Roman date, 45 BC – AD 4 <span class="sub">· leap-year reconstructions</span></h3>
+    <ul class="evt-systems">${x.roman.map(r => `<li${r.id === x.reconId ? ' class="current"' : ''}><span class="sys">${esc(r.name)}</span> ${r.label ? esc(r.label) : `<span class="unsup">${esc(r.reason)}</span>`}${r.label && !r.roman ? ' <span class="sub">(already aligned)</span>' : ''}</li>`).join('')}</ul>
+    <p class="note">The pontiffs inserted the leap day every third year after 45 BC until Augustus suspended it; scholars reconstruct the years differently, so the Roman date of a day in this period is uncertain by up to two days. The seven-day cycle is not affected.</p>`;
+}
+
 function eclipsesHtml(x) {
   if (!x || !x.eclipses) return '';
   if (x.canonStatus !== 'ready') return x.canonStatus === 'error' ? `<p class="note">Eclipse canon not loaded: ${esc(x.canonError)}</p>` : '';
@@ -62,6 +69,6 @@ export function renderCursorCard(root, d, extra) {
       <dt>Cycles since #1</dt><dd>${esc(fmtInt(day.cycle - 1n))} <span class="sub">(${esc(approxYears(day.daysSinceAnchor))})</span></dd>
       <dt>Previous Sabbath</dt><dd><button class="btn jump" data-jdn="${day.isSabbath ? day.jdn - 7n : day.previousSabbath}">${esc(sabbathLabel(day.cycle - 1n))}</button></dd>
       <dt>Next Sabbath</dt><dd><button class="btn jump" data-jdn="${day.isSabbath ? day.jdn + 7n : day.nextSabbath}">${esc(sabbathLabel(day.isSabbath ? day.sabbathIndex + 1n : day.cycle))}</button></dd>
-    </dl>${eclipsesHtml(extra)}${eventsHtml(extra)}${notes}
+    </dl>${romanHtml(extra)}${eclipsesHtml(extra)}${eventsHtml(extra)}${notes}
     <div class="card-actions"><button class="btn" id="copyLink">Copy link</button></div>`;
 }

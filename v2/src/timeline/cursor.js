@@ -11,11 +11,11 @@ import { anniversaryOf, isMilestone } from './sabbath-row-rules.js';
 
 /**
  * @param {bigint} jdn
- * @param {{era?: 'BC/AD'|'BCE/CE'}} [opts]
+ * @param {{era?: 'BC/AD'|'BCE/CE', extraAdapters?: object[]}} [opts] extraAdapters: e.g. the civil-date adapter for the chosen region
  */
 export function describeCursor(jdn, opts = {}) {
   const day = describeDay(jdn);
-  const calendars = adapters.map(a => {
+  const calendars = [...adapters, ...(opts.extraAdapters || [])].map(a => {
     const date = a.fromJdn(jdn);
     const support = a.support(jdn);
     return { id: a.id, name: a.name, date: isUnsupported(date) ? null : date, label: isUnsupported(date) ? null : a.format(date, { era: opts.era }), support };

@@ -4,7 +4,7 @@ This directory holds the second-generation Sabbath Calendar. The original applic
 repository root is the reference implementation and is never modified (design package:
 `../docs/sabbath-calendar-v2/`, approved 2026-11-11).
 
-Open `index.html` (served over HTTP or from a static host; ES modules need a server for `file://` in some browsers). Phases 1–4 of the roadmap are implemented; see `test/reports/phase4-verification.md`. Phase 5 adds a Bible-events row (four chronological systems, 52 events, each dating sourced) and calculated and recorded eclipse rows from the NASA Five Millennium Canon; see `../docs/sabbath-calendar-v2/17-PHASE5-EVENTS-AND-ECLIPSES.md`.
+Open `index.html` (served over HTTP or from a static host; ES modules need a server for `file://` in some browsers). Phases 1–4 of the roadmap are implemented; see `test/reports/phase4-verification.md`. Phase 5 adds a Bible-events row (four chronological systems, 52 events, each dating sourced) and calculated and recorded eclipse rows from the NASA Five Millennium Canon; see `../docs/sabbath-calendar-v2/17-PHASE5-EVENTS-AND-ECLIPSES.md`. A civil-date row shows how each day was written in a chosen region (30 regions, with each one's switch to the Gregorian calendar, and nine reconstructions of the Roman leap years of 45 BC – AD 8); see `../docs/sabbath-calendar-v2/18-PHASE5-CIVIL-CALENDAR.md`.
 
 ## Contents
 
@@ -12,7 +12,7 @@ Open `index.html` (served over HTTP or from a static host; ES modules need a ser
 v2/
 ├── index.html                    the synchronized timeline application
 ├── src/core/                     Chronology Core (BigInt): bigint-math, chronology, invariants
-├── src/calendars/                adapters: gregorian, julian, hebrew, chinese/ (astronomy + rules), registry
+├── src/calendars/                adapters: gregorian, julian, hebrew, chinese/ (astronomy + rules), civil (date as written by region), registry
 ├── src/timeline/                 pure timeline model: zoom ladder, O(visible) ticks, cursor, URL state, Sabbath-row rules
 ├── src/markers/                  Phase 5: Bible-event systems and datings, Genesis arithmetic, eclipse canon reader, recorded eclipses
 ├── data/eclipses/                NASA canon as compact JSON (solar.json, lunar.json) + PROVENANCE.md
@@ -32,6 +32,7 @@ v2/
 cd v2
 npm install          # fast-check only (dev dependency for property tests)
 npm run verify       # core purity check + baseline diff guard + all tests
+npm run check:browser  # UI smoke harness + axe-core in headless Chrome (needs Chrome or Chromium)
 ```
 
 No runtime dependencies. No network access is needed or used by any test.

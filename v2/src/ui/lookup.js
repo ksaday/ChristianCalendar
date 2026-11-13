@@ -21,18 +21,19 @@ const MODES = [
   { id: 'sabbath', label: 'Sabbath number' },
   { id: 'jdn', label: 'Julian Day Number' },
   ...adapters.map(a => ({ id: a.id, label: `${a.name} date` })),
+  { id: 'civil', label: 'Civil date (chosen region)' },
   { id: 'event', label: 'Bible event' },
 ];
 
-function fieldsHtml(mode, era) {
+function fieldsHtml(mode, era, api) {
   if (mode === 'sabbath') return `<label>Sabbath # <input class="wide" name="n" inputmode="numeric" placeholder="e.g. −210562 or 104017" maxlength="42" autofocus></label>`;
   if (mode === 'jdn') return `<label>JDN <input class="wide" name="jdn" inputmode="numeric" placeholder="e.g. 1733205" maxlength="42" autofocus></label>`;
-  if (mode === 'gregorian' || mode === 'julian') {
+  if (mode === 'gregorian' || mode === 'julian' || mode === 'civil') {
     const eras = era === 'BCE/CE' ? ['BCE', 'CE'] : ['BC', 'AD'];
     return `<label>Year <input name="year" inputmode="numeric" maxlength="12" autofocus></label>
       <label>Era <select name="era"><option value="${eras[1]}">${eras[1]}</option><option value="${eras[0]}">${eras[0]}</option></select></label>
       <label>Month <select name="month">${MONTH_NAMES.map((m, i) => `<option value="${i + 1}">${m}</option>`).join('')}</select></label>
-      <label>Day <input name="day" inputmode="numeric" maxlength="2" value="1"></label>`;
+      <label>Day <input name="day" inputmode="numeric" maxlength="2" value="1"></label>${mode === 'civil' ? `<p class="goto-hint">As written in ${esc(api.getCivil().region.name)} at the time (Julian before its switch, Gregorian after; give the year that starts on 1 January).</p>` : ''}`;
   }
   if (mode === 'hebrew') {
     return `<label>Year (AM) <input name="year" inputmode="numeric" maxlength="6" value="5787" autofocus></label>
@@ -55,7 +56,7 @@ function fieldsHtml(mode, era) {
 }
 
 /** Resolve the form to a JDN (or {jdn, note}) or throw an Error with a user-facing message. */
-function resolve(mode, fd) {
+function resolve(mode, fd, api) {
   if (mode === 'sabbath') return sabbathJdn(toBigInt(fd.get('n') || '', 'Sabbath number'));
   if (mode === 'jdn') return toBigInt(fd.get('jdn') || '', 'JDN');
   if (mode === 'event') {
@@ -65,9 +66,9 @@ function resolve(mode, fd) {
     if (!pos) throw new Error(`${ev.label}: no date in the ${sys.short} reckoning — ${ev.datings[sysId].reason}`);
     return { jdn: pos.jump, note: `${ev.label} (${ev.ref}) — ${pos.figure} [${sys.short}] · ${pos.basis}` };
   }
-  const a = adapters.find(x => x.id === mode);
+  const a = mode === 'civil' ? api.getCivil() : adapters.find(x => x.id === mode);
   let date;
-  if (mode === 'gregorian' || mode === 'julian') {
+  if (mode === 'gregorian' || mode === 'julian' || mode === 'civil') {
     date = { year: astronomicalYear(fd.get('era'), toBigInt(fd.get('year') || '', 'year')), month: Number(fd.get('month')), day: Number(fd.get('day')) };
   } else if (mode === 'hebrew') {
     const year = toBigInt(fd.get('year') || '', 'year'); const month = Number(fd.get('month'));
@@ -77,12 +78,12 @@ function resolve(mode, fd) {
     date = { year: toBigInt(fd.get('year') || '', 'year'), month: Number(fd.get('month')), leapMonth: fd.get('leap') === 'on', day: Number(fd.get('day')) };
   }
   const j = a.toJdn(date);
-  if (isUnsupported(j)) throw new Error(`unsupported in the ${a.name} calendar: ${j.reason}`);
+  if (isUnsupported(j)) throw new Error(mode === 'civil' ? j.reason : `unsupported in the ${a.name} calendar: ${j.reason}`);
   return j;
 }
 
-function previewHtml(jdn, era, note) {
-  const d = describeCursor(jdn, { era });
+function previewHtml(jdn, era, note, extraAdapters) {
+  const d = describeCursor(jdn, { era, extraAdapters });
   const day = describeDay(jdn);
   const cal = d.calendars.map(c => `${esc(c.name)}: ${c.label === null ? '—' : esc(c.label)} <span class="badge ${c.support.certainty}">${c.support.certainty.toLowerCase()}</span>`).join(' · ');
   const sab = day.isSabbath ? sabbathLabel(day.sabbathIndex) : `${day.dayName}, cycle #${fmtInt(day.cycle)} (day ${day.positionInCycle} of 7)`;
@@ -92,7 +93,7 @@ function previewHtml(jdn, era, note) {
 /**
  * Wire the dialog. `onGo(jdn)` is called with a BigInt.
  * @param {HTMLDialogElement} dialog
- * @param {{ getEra: () => string, onGo: (jdn: bigint) => void }} api
+ * @param {{ getEra: () => string, getCivil: () => object, onGo: (jdn: bigint) => void }} api
  */
 export function setupLookup(dialog, api) {
   const modes = dialog.querySelector('#gotoModes'), fields = dialog.querySelector('#gotoFields'),
@@ -100,13 +101,13 @@ export function setupLookup(dialog, api) {
   let mode = 'sabbath', resolved = null;
 
   modes.innerHTML = MODES.map((m, i) => `<label><input type="radio" name="mode" value="${m.id}" ${i === 0 ? 'checked' : ''}> ${esc(m.label)}</label>`).join('');
-  const renderFields = () => { fields.innerHTML = fieldsHtml(mode, api.getEra()); update(); fields.querySelector('input,select')?.focus(); };
+  const renderFields = () => { fields.innerHTML = fieldsHtml(mode, api.getEra(), api); update(); fields.querySelector('input,select')?.focus(); };
   const update = () => {
     try {
-      const res = resolve(mode, new FormData(form));
+      const res = resolve(mode, new FormData(form), api);
       const note = typeof res === 'bigint' ? '' : res.note;
       resolved = typeof res === 'bigint' ? res : res.jdn;
-      preview.className = 'goto-preview'; preview.innerHTML = previewHtml(resolved, api.getEra(), note); goBtn.disabled = false;
+      preview.className = 'goto-preview'; preview.innerHTML = previewHtml(resolved, api.getEra(), note, [api.getCivil()]); goBtn.disabled = false;
     } catch (e) {
       resolved = null; preview.className = 'goto-preview err';
       preview.textContent = (e instanceof ChronologyInputError || e instanceof Error) ? e.message : String(e); goBtn.disabled = true;

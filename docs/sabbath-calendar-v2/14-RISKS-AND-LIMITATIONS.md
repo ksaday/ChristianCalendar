@@ -47,6 +47,14 @@
   500 BC the ΔT uncertainty (σ ≈ 10 min at 1000 BC, ≈ 1 h at 2000 BC) can move an eclipse across
   midnight, and the tooltip flags it. Eclipses are listed only for 1999 BC – AD 3000.
 
+- **Civil dates are per region and per reconstruction.** Before AD 4/8 the Roman date depends on
+  which scholar's leap years are used (up to two days apart); the civil row says which. Regions that
+  switched in several stages, the Ottoman Rumi calendar and the date each region first used the
+  Julian calendar are not modeled (doc 18 §4).
+- **Date-line changes are not modeled.** The Philippines skipped 31 December 1844 and Alaska repeated
+  a Friday in October 1867 when they moved across the date line. Local weekday names changed there;
+  the Greenwich-referenced day count, and with it the seven-day cycle, did not.
+
 ## 3. Known unknowns (recorded, not blocking)
 
 | Topic | Status | Default |

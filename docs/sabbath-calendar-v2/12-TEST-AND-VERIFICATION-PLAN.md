@@ -145,6 +145,15 @@ Chrome in real time over the DevTools protocol (Node's built-in WebSocket, no ne
 with its own no-store static server. It replaces the Phase 4 limitation that the smoke harness
 needed a visible browser (the earlier stall came from `--virtual-time-budget`), and CI now runs it.
 
+### 7.4 Phase 5 civil-date record (2026-11-13)
+
+T-CIV-01…06 (`test/civil.test.js`) and T-UI-19, T-UI-20; definitions in doc 18 §5. Node suite
+100/100; `npm run check:browser` 18/18 smoke checks and 0 axe violations. The new smoke checks
+found a real race: a render pending when the address changed (for example right after changing a
+setting) wrote the old cursor back into the URL and the jump was lost. The app now writes the hash
+only when it is still the one the app last wrote. `BROWSER_EVAL_PATH`/`BROWSER_EVAL` run a single
+expression on a page, for debugging.
+
 ## 8. Traceability matrix (requirement → tests)
 
 | Requirement | Tests |
@@ -175,6 +184,7 @@ needed a visible browser (the earlier stall came from `--virtual-time-budget`), 
 | REQ-UI-01…16 | T-UI-01…08 |
 | REQ-VER-01…06 | this document |
 | REQ-GEN-01 | CI grep: no numeric constant other than 1733205 and 7 in `core/`; no "creation" identifier outside `markers/` (`check-core`) |
+| Roadmap 5.4, 5.7 (doc 18) | T-CIV-01…06, T-UI-19, T-UI-20 |
 | REQ-GEN-02, 03 (Phase 5, doc 17) | T-EVT-01…06, T-UI-15, T-UI-18; eclipses T-ECL-01…05, T-UI-16, T-UI-17 |
 | REQ-NF-05 | T-NF-01: run suite under TZ=UTC, TZ=Pacific/Kiritimati, TZ=Pacific/Pago_Pago |
 

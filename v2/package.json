@@ -1,6 +1,6 @@
 {
   "name": "sabbath-calendar-v2",
-  "version": "0.5.0",
+  "version": "0.6.0",
   "description": "Second-generation Sabbath Calendar: exact, unbounded seven-day chronology anchored at JDN 1,733,205 (Sabbath #1), with synchronized calendar representations.",
   "type": "module",
   "private": true,

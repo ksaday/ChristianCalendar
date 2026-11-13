@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>The Sabbath Calendar — one unbroken seven-day cycle</title>
 <meta name="description" content="A mathematically exact, continuously numbered Sabbath calendar anchored at Saturday 4 April AD 33 (JDN 1,733,205), synchronized with the Julian, Gregorian, Hebrew and Chinese calendars, with Bible-event traditions and NASA eclipse rows.">
-<link rel="stylesheet" href="src/styles/v2.css?v=0.5.0">
+<link rel="stylesheet" href="src/styles/v2.css?v=0.6.0">
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns=%27http://www.w3.org/2000/svg%27 viewBox=%270 0 32 32%27%3E%3Crect width=%2732%27 height=%2732%27 rx=%276%27 fill=%27%231B2240%27/%3E%3Ctext x=%2716%27 y=%2722%27 font-size=%2718%27 text-anchor=%27middle%27 fill=%27%23B0842C%27 font-family=%27serif%27%3E7%3C/text%3E%3C/svg%3E">
 </head>
 <body>
@@ -33,6 +33,9 @@
     <div class="rows-list">
       <label><input type="checkbox" data-row="julian" checked> Julian</label>
       <label><input type="checkbox" data-row="gregorian" checked> Gregorian</label>
+      <label><input type="checkbox" data-row="civil" checked> Civil date as written</label>
+      <label class="sub-option">Region <select id="civilRegion" class="btn" aria-label="Region for the civil date"></select></label>
+      <label class="sub-option">45 BC – AD 8 <select id="civilRecon" class="btn" aria-label="Reconstruction of the early Julian leap years"></select></label>
       <label><input type="checkbox" data-row="hebrew" checked> Hebrew</label>
       <label><input type="checkbox" data-row="chinese" checked> Chinese</label>
       <label><input type="checkbox" data-row="events" checked> Bible events</label>
@@ -89,12 +92,13 @@
   <div class="footer-inner">
     <p class="verse">&ldquo;There remaineth therefore a rest to the people of God.&rdquo;<span class="verse-ref">&mdash; Hebrews&nbsp;4:9</span></p>
     <p class="method">Method: continuous Julian Day Number counting in arbitrary-precision integers &mdash; Sabbath #n = JDN 1,733,205 + 7&times;(n&minus;1). The seven-day week ran unbroken through the 1582 reform. Sabbath numbers before #1 are a mathematical projection of the cycle and make no claim about observance. Calendar labels carry their own certainty: proleptic Gregorian and Julian dates, calculated Hebrew dates before 922&nbsp;CE, and Chinese dates before 1929 are conventions or reconstructions, never asserted as observed dates.</p>
+    <p class="method">The civil row shows the date as written in the chosen region: the Roman Julian calendar of 45&nbsp;BC&nbsp;–&nbsp;AD&nbsp;8 by a selectable scholarly reconstruction (approximate), then the Julian calendar (with England's 25&nbsp;March legal year and Sweden's calendar of 1700–1712), then the Gregorian calendar from that region's own switch. Only labels change at a switch; the seven-day cycle runs straight through. Design note: <code>docs/sabbath-calendar-v2/18-PHASE5-CIVIL-CALENDAR.md</code>.</p>
     <p class="method">Bible-event dates are traditions or estimates (Ussher, Seder Olam, early-date conservative, critical/historical), each with its source; they are projected onto the unbroken cycle and never feed it. Eclipse Predictions by Fred Espenak and Jean Meeus (NASA's GSFC): <a href="https://eclipse.gsfc.nasa.gov/SEcat5/SEcatalog.html">Five Millennium Catalog of Solar Eclipses</a> and <a href="https://eclipse.gsfc.nasa.gov/LEcat5/LEcatalog.html">of Lunar Eclipses</a>; days are UT civil days and the tooltip states ΔT with its uncertainty. Design note: <code>docs/sabbath-calendar-v2/17-PHASE5-EVENTS-AND-ECLIPSES.md</code>.</p>
     <p class="method">Reference application: <a href="../index.html">The Christian Calendar</a> (unchanged). Design package: <code>docs/sabbath-calendar-v2/</code>.</p>
     <p id="selfCheck" class="selfcheck"></p>
   </div>
 </footer>
 
-<script type="module" src="src/ui/app.js?v=0.5.0"></script>
+<script type="module" src="src/ui/app.js?v=0.6.0"></script>
 </body>
 </html>
