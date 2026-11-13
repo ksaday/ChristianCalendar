@@ -12,22 +12,22 @@ jobs:
         with: { fetch-depth: 0 }
       - uses: actions/setup-node@v4
         with: { node-version: '22' }
-      - name: Baseline files unchanged (REQ-COMPAT-02)
+      - name: "Baseline files unchanged (REQ-COMPAT-02)"
         run: git diff --quiet 6229702369afed375cfdbfaa5e6112052d94f57c -- index.html css js README.md
-      - name: Install dev dependencies (fast-check only)
+      - name: "Install dev dependencies (fast-check only)"
         working-directory: v2
         run: npm ci
-      - name: Core purity check
+      - name: "Core purity check"
         working-directory: v2
         run: npm run check:core
-      - name: Tests (no network: tests never fetch; see docs 12 §1)
+      - name: "Tests (no network: tests never fetch; see docs 12 §1)"
         working-directory: v2
         run: npm test
         env: { TZ: 'Pacific/Kiritimati' }
-      - name: Tests again under a different timezone (REQ-NF-05)
+      - name: "Tests again under a different timezone (REQ-NF-05)"
         working-directory: v2
         run: npm test
         env: { TZ: 'Pacific/Pago_Pago' }
-      - name: Browser checks — UI smoke harness and axe-core in headless Chrome (doc 12 §7.3)
+      - name: "Browser checks — UI smoke harness and axe-core in headless Chrome (doc 12 §7.3)"
         working-directory: v2
         run: npm run check:browser
